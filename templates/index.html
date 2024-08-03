@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}Mainpage{% endblock %}
+{% block content %}
+<h2>Mainpage</h2>
+Welcome to the site!
+
+{% if session.user_id %}
+You are logged in.
+<p>
+<a href="/logout">Logout</a>
+{% else %}
+<p>
+<a href="/login">Login</a> 
+{% endif %}
+{% endblock %}

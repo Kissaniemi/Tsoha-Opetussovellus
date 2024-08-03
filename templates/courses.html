@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Mainpage{% endblock %}
+{% block content %}
+<h2>Number of available courses: {{count}}</h2>
+<hr>
+{% for course in courses %}
+<i>Course:</i> {{ course[0] }}
+<p>
+<i>Course description:</i> {{ course[1] }}
+<hr>
+{% endfor %}
+
+{% if session.user_id %}
+<p>
+<a href="/create_course">Create a new course</a> 
+<p>
+<a href="/logout">Logout</a>
+
+{% else %}
+<a href="/login">Login</a>
+{% endif %}
+
+{% endblock %}
