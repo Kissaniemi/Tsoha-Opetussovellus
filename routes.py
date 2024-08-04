@@ -122,10 +122,3 @@ def delete_course():
                 return redirect("/courses")
         return render_template(
                 "error.html", message="Only the course teacher can delete the course")
-
-
-
-
-
-
-
