@@ -12,17 +12,24 @@ Sovelluksen toiminta ominaisuuksista valmiina:
 
 ### Käynnistysohje
 
-Lataa ja pura ZIP tiedosto koneelle, siirry kansioon. Luo .env-tiedosto kansioon ja kirjoita tiedostoon:
+#### Lataa ja pura ZIP tiedosto koneelle, siirry kansioon. Luo .env-tiedosto kansioon ja kirjoita tiedostoon:
+
 DATABASE_URL= "tähän tietokannan paikallinen osoite"
+
 SECRET_KEY= "tähän salainen avain"
 
-Aktivoi virtuaaliympäristö ja suorita seuraavat komennot:
+#### Aktivoi virtuaaliympäristö ja suorita seuraavat komennot:
+
 python3 -m venv venv
-source benv/bin/activate
+
+source venv/bin/activate
+
 pip install -r ./requirements.txt
+
 psql < schema.sql
 
-Sovellus käynnistyy komennolla:
+#### Sovellus käynnistyy komennolla:
+
 flask run
 
 
