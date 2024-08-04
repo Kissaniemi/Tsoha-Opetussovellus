@@ -1,7 +1,6 @@
 from flask import redirect, render_template, request
 from app import app
-import courses
-import users
+import courses, users
 from flask import session
 
 
@@ -72,12 +71,17 @@ def create_teacher():
 @app.route("/courses", methods=["GET", "POST"])
 def get_course():
     list = courses.get_list()
-    return render_template("courses.html", count=len(list), courses=list) # TODO check että kurssit vain opettajien tehtävissä
+    return render_template("courses.html", count=len(list), courses=list) 
+
 
 @app.route("/create_course", methods=["GET", "POST"])
 def create_course():
     if request.method == "GET":
-        return render_template("new_course.html")
+            user_type = users.get_user_type()
+            if user_type == False:
+                return render_template(
+                "error.html", message="Only teachers can make courses")
+            return render_template("new_course.html")
     if request.method == "POST":
         coursename = request.form["coursename"]
         description = request.form["description"]
@@ -86,10 +90,22 @@ def create_course():
         if len(description) > 1000:
             return render_template("error.html", error="Course description too long")
         if session["csrf_token"] != request.form["csrf_token"]:
-             return render_template("error.html", error="403")
+                return render_template("error.html", error="403")
         # TODO chekkaa että kurssinimi ei ole jo viety
         if courses.create_new(coursename, description):
             return redirect("/courses")
         return render_template(
             "error.html", message="Course creation failed")
+
+
+@app.route("/join_course", methods=["POST"])
+def join():
+    if request.method == "POST":
+        course_id = request.form["course_id"]
+        if courses.join_course(course_id):
+            return redirect("/courses")
+        return render_template(
+            "error.html", message="Joining course failed")
+    
+    # TODO chekkaa että kurssille on mahdollista ilmoittautua vain kerran
 

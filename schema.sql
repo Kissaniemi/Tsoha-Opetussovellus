@@ -12,15 +12,22 @@ CREATE TABLE courses (
     description TEXT
 );
 
+CREATE TABLE students (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users,
+    course_id INTEGER REFERENCES courses
+);
+
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     name TEXT,
+    question TEXT,
     course_id INTEGER REFERENCES courses
 );
 
 CREATE TABLE points (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER REFERENCES students,
+    student_id INTEGER REFERENCES users,
     task_id INTEGER REFERENCES tasks,
     points INTEGER
 );

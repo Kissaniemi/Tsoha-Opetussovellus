@@ -82,9 +82,7 @@ def get_user_type():
         Boolean: False if user type is not teacher, True if is
     """
     id_user = session.get("user_id", 0)
-    sql = text("SELECT type FROM users WHERE id=:id")
-    result = db.session.execute(sql, {"username": id_user})
+    sql = text("SELECT teacher FROM users WHERE id=:id")
+    result = db.session.execute(sql, {"id": id_user})
     user_type = result.fetchone()
-    if not user_type:
-        return False
-    return True
+    return user_type.teacher

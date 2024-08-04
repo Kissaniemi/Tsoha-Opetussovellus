@@ -4,9 +4,13 @@
 <h2>Number of available courses: {{count}}</h2>
 <hr>
 {% for course in courses %}
-<i>Course:</i> {{ course[0] }}
+<i>Course:</i> {{ course[1] }}
 <p>
-<i>Course description:</i> {{ course[1] }}
+<i>Course description:</i> {{ course[2] }}
+<form action="/join_course" method="post">
+<input type="hidden" name="course_id" value="{{ course[0] }}">
+<input type="submit" value="Join course">
+</form>
 <hr>
 {% endfor %}
 
