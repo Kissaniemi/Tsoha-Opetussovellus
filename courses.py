@@ -4,6 +4,7 @@ from sqlalchemy.sql import text
 from db import db
 import users
 
+# TODO lisää paremmat virheviestit routes:iin sen sijaan että palautetaan vain False
 
 def get_list():
     """Returns all courses (if available)
@@ -17,6 +18,11 @@ def create_new(name, description):
     """
     user_id = users.get_user_id()
     try:
+        sql = text("SELECT name FROM courses WHERE name=:name")
+        result = db.session.execute(sql, {"name": name})
+        user = result.fetchone()
+        if user:
+            return False
         sql = text(
             "INSERT INTO courses(name, teacher_id, description) VALUES(:name,:teacher_id,:description)")
         db.session.execute(sql,
@@ -34,14 +40,47 @@ def join_course(course_id):
     """
     user_id = users.get_user_id()
     try:
+        sql = text("SELECT id FROM students WHERE user_id=:user_id AND course_id=:course_id ")
+        result = db.session.execute(sql, 
+                                    {"user_id": user_id, 
+                                    "course_id": course_id})
+        user = result.fetchone()
+        if user:
+            return False
+         
         sql = text("INSERT INTO students(user_id, course_id) VALUES(:user_id, :course_id)")
         db.session.execute(sql,
-                           {"user_id":user_id,
-                            "course_id":course_id})
+                           {"user_id": user_id,
+                            "course_id": course_id})
         db.session.commit()
     except BaseException:
         return False
     return True
 
 
+def check_course_teacher(teacher_id, course_id):
+    """Checks that the given user_id matches the course teacher_id
+    """
+    sql = text("SELECT teacher_id FROM courses WHERE id=:course_id")
+    result = db.session.execute(sql, {"course_id": course_id})
+    if teacher_id == result.fetchone()[0]:
+        return True
+    return False
 
+
+def delete_course(course_id):
+    """Deletes course
+    """
+    try:
+        sql = text("DELETE FROM students WHERE id=:course_id")  # Poistaa nyt myös viittaukset oppilaat tauluun
+        db.session.execute(sql, 
+                            {"course_id": course_id})
+        db.session.commit()
+        sql = text("DELETE FROM courses WHERE id=:course_id")
+        db.session.execute(sql, 
+                            {"course_id": course_id})
+        db.session.commit()
+
+    except BaseException:
+        return False
+    return True

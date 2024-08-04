@@ -12,6 +12,13 @@ CREATE TABLE courses (
     description TEXT
 );
 
+CREATE TABLE materials (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    material TEXT,
+    course_id INTEGER REFERENCES courses
+);
+
 CREATE TABLE students (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,

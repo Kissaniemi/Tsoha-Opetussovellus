@@ -91,7 +91,6 @@ def create_course():
             return render_template("error.html", error="Course description too long")
         if session["csrf_token"] != request.form["csrf_token"]:
                 return render_template("error.html", error="403")
-        # TODO chekkaa että kurssinimi ei ole jo viety
         if courses.create_new(coursename, description):
             return redirect("/courses")
         return render_template(
@@ -102,10 +101,31 @@ def create_course():
 def join():
     if request.method == "POST":
         course_id = request.form["course_id"]
+        user_id = users.get_user_id()
+        if courses.check_course_teacher(user_id, course_id):
+            return render_template(
+                "error.html", message="Can't join own course")
+
         if courses.join_course(course_id):
-            return redirect("/courses")
+            return redirect("/courses")    # TODO parempi ilmoitus kurssille lisäyksen onnistumisesta
         return render_template(
             "error.html", message="Joining course failed")
-    
-    # TODO chekkaa että kurssille on mahdollista ilmoittautua vain kerran
+
+
+@app.route("/delete_course", methods=["POST"])
+def delete_course():
+    if request.method == "POST":
+        course_id = request.form["course_id"]
+        teacher_id = users.get_user_id()
+        if courses.check_course_teacher(teacher_id, course_id):
+            if courses.delete_course(course_id):
+                return redirect("/courses")
+        return render_template(
+                "error.html", message="Only the course teacher can delete the course")
+
+
+
+
+
+
 
