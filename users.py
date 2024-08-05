@@ -85,4 +85,4 @@ def get_user_type():
     sql = text("SELECT teacher FROM users WHERE id=:id")
     result = db.session.execute(sql, {"id": id_user})
     user_type = result.fetchone()
-    return user_type.teacher
+    return user_type
