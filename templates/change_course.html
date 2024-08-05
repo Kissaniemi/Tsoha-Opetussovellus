@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}Mainpage{% endblock %}
+{% block content %}
+<h3>Change course</h3>
+<p>
+<form action="/change_course/{{ info[0] }}" method="post">
+<input type="hidden" name="course_id" value="{{ info[0] }}">
+Course name: <input type="text" name="coursename">
+<p>
+Course description: <br>
+<textarea name="description"></textarea>
+<br>
+<input type="submit" value="Change course">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+
+<script>
+    function check(form) {
+        if (form.title.value.length > 100) {
+            alert("Course name too long");
+            return false;
+        }
+        if (form.message.value.length > 5000) {
+            alert("Course description too long");
+            return false;
+        }
+        return true;
+    }
+    </script>
+{% endblock %}

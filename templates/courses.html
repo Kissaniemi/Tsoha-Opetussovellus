@@ -17,6 +17,11 @@
 <input type="submit" value="Course page">
 </form>
 <p>
+<form action="/change_course/{{ course[0] }}" method="get">
+<input type="hidden" name="course_id" value="{{ course[0] }}">
+<input type="submit" value="Change course name/description">
+</form>
+<p>
 <form action="/delete_course" method="post">
 <input type="hidden" name="course_id" value="{{ course[0] }}">
 <input type="submit" value="Delete course">

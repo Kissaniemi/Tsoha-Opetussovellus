@@ -92,3 +92,17 @@ def get_course_info(id):
     result = db.session.execute(sql, 
                                 {"id": id})
     return result.fetchone()
+
+
+def change_course(course_id, name, description):
+    """Changes course info"""
+    try:
+        sql = text("UPDATE courses SET name=:name, description=:description WHERE id=:course_id")
+        db.session.execute(sql, {"course_id": course_id,
+                                 "name": name,
+                                 "description":description})
+        db.session.commit()
+
+    except BaseException:
+        return False
+    return True

@@ -127,3 +127,30 @@ def delete_course():
 def course_page(id):
     info = courses.get_course_info(id)
     return render_template("course_page.html", info=info)
+
+
+@app.route("/change_course/<int:id>", methods=["GET", "POST"])
+def change_course(id):
+    if request.method == "GET":
+        if not id:
+            return render_template(
+                "error.html", message="course id not found")
+        info = courses.get_course_info(id)
+        return render_template("change_course.html", info=info)
+
+    if request.method == "POST":
+        course_id = request.form["course_id"]
+        coursename = request.form["coursename"]
+        description = request.form["description"]
+        teacher_id = users.get_user_id()
+        if len(coursename) > 100:
+            return render_template("error.html", error="Course name too long")
+        if len(description) > 1000:
+            return render_template("error.html", error="Course description too long")
+        if session["csrf_token"] != request.form["csrf_token"]:
+                return render_template("error.html", error="403")
+        if courses.check_course_teacher(teacher_id, course_id):
+            if courses.change_course(course_id, coursename, description):
+                return redirect("/courses")
+        return render_template(
+                "error.html", message="Only the course teacher can change the course")
