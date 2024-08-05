@@ -84,3 +84,11 @@ def delete_course(course_id):
     except BaseException:
         return False
     return True
+
+def get_course_info(id):
+    """Returns course id, name, teacher_id and description
+    """
+    sql = text("SELECT id, name, teacher_id, description FROM courses WHERE id=:id ")
+    result = db.session.execute(sql, 
+                                {"id": id})
+    return result.fetchone()

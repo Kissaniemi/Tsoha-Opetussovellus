@@ -122,4 +122,8 @@ def delete_course():
                 return redirect("/courses")
         return render_template(
                 "error.html", message="Only the course teacher can delete the course")
-    
+
+@app.route("/course_page/<int:id>", methods=["GET", "POST"])
+def course_page(id):
+    info = courses.get_course_info(id)
+    return render_template("course_page.html", info=info)
