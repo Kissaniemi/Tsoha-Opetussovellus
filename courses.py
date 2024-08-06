@@ -63,9 +63,21 @@ def check_course_teacher(teacher_id, course_id):
     """
     sql = text("SELECT teacher_id FROM courses WHERE id=:course_id")
     result = db.session.execute(sql, {"course_id": course_id})
-    if teacher_id == result.fetchone()[0]:
-        return True
-    return False
+    if result.fetchone() is None:
+        return False
+    return True
+
+
+def check_course_student(user_id, course_id):
+    """Checks that the given user_id matches a student in the course
+    """
+    sql = text("SELECT user_id FROM students WHERE user_id=:user_id AND course_id=:course_id ")
+    result = db.session.execute(sql, {
+                                "user_id":user_id,
+                                "course_id": course_id})
+    if result.fetchone() is None:
+        return False
+    return True
 
 
 def delete_course(course_id):
@@ -122,3 +134,12 @@ def add_material(course_id, name, material):
     except BaseException:
         return False
     return True
+
+def get_materials(course_id):
+    """Get all course materials (related to the given course)
+    """
+
+    sql = text("SELECT id, name, material FROM materials WHERE course_id=:course_id ")
+    result = db.session.execute(sql, 
+                                {"course_id": course_id})
+    return result.fetchall()

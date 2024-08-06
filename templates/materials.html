@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}Material{% endblock %}
+{% block content %}
+
+<h2>Available material:</h2>
+<hr>
+{% for material in materials %}
+<i>Material name:</i> {{ material[1] }}
+<p>
+<i>Material text:</i> {{ material[2] }}
+<p>
+<hr>
+<p>
+{% endfor %}
+{% endblock %}

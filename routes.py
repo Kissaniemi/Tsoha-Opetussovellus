@@ -174,3 +174,12 @@ def add_material(id):
             return redirect(url_for("course_page", id=id))
         else:
             return render_template("error.html", message="Creating course material failed")
+        
+@app.route("/course_material/<int:id>", methods=["GET", "POST"])
+def get_material(id):
+    student_id = users.get_user_id()
+    if not courses.check_course_student(student_id, id):
+        return render_template(
+            "error.html", message="Only students of this course can see the course material")
+    materials = courses.get_materials(id)
+    return render_template("materials.html", id=id, materials=materials)
