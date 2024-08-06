@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request
+from flask import redirect, render_template, request, url_for
 from app import app
 import courses, users
 from flask import session
@@ -108,6 +108,9 @@ def join():
 
         if courses.join_course(course_id):
             return redirect("/courses")    # TODO parempi ilmoitus kurssille lisäyksen onnistumisesta
+        if not courses.join_course(course_id):
+            return render_template(
+            "error.html", message="Already joined course")
         return render_template(
             "error.html", message="Joining course failed")
 
@@ -155,3 +158,19 @@ def change_course(id):
                 return redirect("/courses")
         return render_template(
                 "error.html", message="Course change failed")
+    
+@app.route("/add_material/<int:id>", methods=["GET", "POST"])
+def add_material(id):
+    if request.method == "GET":
+        teacher_id = users.get_user_id()
+        if not courses.check_course_teacher(teacher_id, id):
+            return render_template(
+                "error.html", message="Only the course teacher can add material to this course")
+        return render_template("new_material.html", id=id)
+    if request.method == "POST":
+        name = request.form["materialname"]
+        material = request.form["materialtext"]
+        if courses.add_material(id, name, material):
+            return redirect(url_for("course_page", id=id))
+        else:
+            return render_template("error.html", message="Creating course material failed")

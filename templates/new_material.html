@@ -1,17 +1,18 @@
 {% extends "layout.html" %}
 {% block title %}Mainpage{% endblock %}
 {% block content %}
-<h3>Create new course</h3>
+<h3>Add new material to course</h3>
 <p>
-<form action="/create_course" method="post">
-Course name: <input type="text" name="coursename">
+<form action="/add_material/{{ id }}" method="post">
+Material name: <input type="text" name="materialname">
 <p>
-Course description: <br>
-<textarea name="description"></textarea>
+Text material: <br>
+<textarea name="materialtext"></textarea>
 <br>
-<input type="submit" value="Create new course">
+<input type="submit" value="Add material">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+
 <script>
     function check(form) {
         if (form.title.value.length > 100) {
@@ -25,6 +26,5 @@ Course description: <br>
         return true;
     }
     </script>
-    
-    
+
 {% endblock %}

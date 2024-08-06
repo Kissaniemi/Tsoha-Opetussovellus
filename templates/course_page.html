@@ -19,5 +19,16 @@ Kurssin esittely: {{ info[3] }}
 <input type="hidden" name="course_id" value="{{ info[0] }}">
 <input type="submit" value="Delete course">
 </form>
+<p>
+<form action="/add_material/{{ info[0] }}" method="get">
+<input type="hidden" name="course_id" value="{{ info[0] }}">
+<input type="submit" value="Add course material">
+</form>
+<p>
+<form action="/course_material/{{ info[0] }}" method="get">
+<input type="hidden" name="course_id" value="{{ info[0] }}">
+<input type="submit" value="Course material">
+</form>
+<p>
 <p></p>
 {% endblock %}

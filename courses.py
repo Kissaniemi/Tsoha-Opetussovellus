@@ -106,3 +106,19 @@ def change_course(course_id, name, description):
     except BaseException:
         return False
     return True
+
+
+def add_material(course_id, name, material):
+    """Add material to the course
+    """
+    try:
+        sql = text("INSERT INTO materials(name, material, course_id) VALUES(:name,:material,:course_id)")
+        db.session.execute(sql,
+                                {"name": name,
+                                "material": material,
+                                "course_id": course_id})
+
+        db.session.commit()
+    except BaseException:
+        return False
+    return True
