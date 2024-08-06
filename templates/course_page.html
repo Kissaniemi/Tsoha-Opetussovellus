@@ -5,5 +5,19 @@
 Tämä on kurssin <b>{{ info[1] }}</b> pääsivu
 <p>
 Kurssin esittely: {{ info[3] }} 
+<form action="/join_course" method="post">
+<input type="hidden" name="course_id" value="{{ info[0] }}">
+<input type="submit" value="Join course">
+</form>
+<p>
+<form action="/change_course/{{ info[0] }}" method="get">
+<input type="hidden" name="course_id" value="{{ info[0] }}">
+<input type="submit" value="Change course name/description">
+</form>
+<p>
+<form action="/delete_course" method="post">
+<input type="hidden" name="course_id" value="{{ info[0] }}">
+<input type="submit" value="Delete course">
+</form>
 <p></p>
 {% endblock %}
