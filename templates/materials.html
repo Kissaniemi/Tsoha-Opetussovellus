@@ -4,11 +4,21 @@
 
 <h2>Available material:</h2>
 <hr>
-{% for material in materials %}
-<i>Material name:</i> {{ material[1] }}
+{% for mat in material %}
+<i>Material name:</i> {{ mat[1] }}
 <p>
-<i>Material text:</i> {{ material[2] }}
+<i>Material text:</i> {{ mat[2] }}
 <p>
+<form action="/delete_material/{{ mat[0] }}" method="post">
+<input type="submit" value="Delete material">
+<input type="hidden" name="course_id" value="{{ mat[3] }}">
+<input type="hidden" name="mat_id" value="{{ mat[0] }}">
+</form>
+<p>
+<form action="/change_material/{{ mat[0] }}" method="get">
+<input type="submit" value="Change material">
+<input type="hidden" name="mat_id" value="{{ mat[0] }}">
+</form>
 <hr>
 <p>
 {% endfor %}

@@ -1,15 +1,16 @@
 {% extends "layout.html" %}
-{% block title %}Mainpage{% endblock %}
+{% block title %}Change material{% endblock %}
 {% block content %}
-<h3>Add new material to course</h3>
+<h3>Change material</h3>
 <p>
-<form action="/add_material/{{ id }}" method="post">
+<form action="/change_material/{{ info.id }}" method="post">
 Material name (5-30 characters): <input type="text" name="materialname" required minlength="5" maxlength="30">
 <p>
 Text material (5-500 characters): <br>
 <textarea name="materialtext" required minlength="5" maxlength="500" ></textarea>
 <br>
-<input type="submit" value="Add material">
+<input type="hidden" name="course_id" value="{{ info.course_id }}">
+<input type="submit" value="Update material">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 
@@ -26,5 +27,4 @@ Text material (5-500 characters): <br>
         return true;
     }
     </script>
-
 {% endblock %}

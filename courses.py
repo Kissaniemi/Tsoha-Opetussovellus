@@ -61,8 +61,8 @@ def join_course(course_id):
 def check_course_teacher(teacher_id, course_id):
     """Checks that the given user_id matches the course teacher_id
     """
-    sql = text("SELECT teacher_id FROM courses WHERE id=:course_id")
-    result = db.session.execute(sql, {"course_id": course_id})
+    sql = text("SELECT teacher_id FROM courses WHERE id=:id")
+    result = db.session.execute(sql, {"id": course_id})
     if result.fetchone() is None:
         return False
     return True
@@ -118,28 +118,3 @@ def change_course(course_id, name, description):
     except BaseException:
         return False
     return True
-
-
-def add_material(course_id, name, material):
-    """Add material to the course
-    """
-    try:
-        sql = text("INSERT INTO materials(name, material, course_id) VALUES(:name,:material,:course_id)")
-        db.session.execute(sql,
-                                {"name": name,
-                                "material": material,
-                                "course_id": course_id})
-
-        db.session.commit()
-    except BaseException:
-        return False
-    return True
-
-def get_materials(course_id):
-    """Get all course materials (related to the given course)
-    """
-
-    sql = text("SELECT id, name, material FROM materials WHERE course_id=:course_id ")
-    result = db.session.execute(sql, 
-                                {"course_id": course_id})
-    return result.fetchall()

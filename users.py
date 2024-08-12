@@ -84,5 +84,17 @@ def get_user_type():
     id_user = session.get("user_id", 0)
     sql = text("SELECT teacher FROM users WHERE id=:id")
     result = db.session.execute(sql, {"id": id_user})
-    user_type = result.fetchone()
-    return user_type
+    return result.fetchone()
+
+
+def get_user_name():
+    """Returns username
+    """
+    id_user = session.get("user_id", 0)
+    sql = text("SELECT username FROM users WHERE id=:id")
+    result = db.session.execute(sql, {"id": id_user})
+    result_one = result.fetchone()
+    if result_one is None:
+        return False
+    return result_one[0]
+

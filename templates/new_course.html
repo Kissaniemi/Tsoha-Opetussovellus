@@ -4,21 +4,21 @@
 <h3>Create new course</h3>
 <p>
 <form action="/create_course" method="post">
-Course name: <input type="text" name="coursename">
+Course name (5-40 characters): <input type="text" name="coursename" required minlength="5" maxlength="40">
 <p>
-Course description: <br>
-<textarea name="description"></textarea>
+Course description (5-200 characters): <br>
+<textarea name="description" required minlength="5" maxlength="200"></textarea>
 <br>
 <input type="submit" value="Create new course">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <script>
     function check(form) {
-        if (form.title.value.length > 100) {
+        if (form.title.value.length > 40) {
             alert("Course name too long");
             return false;
         }
-        if (form.message.value.length > 5000) {
+        if (form.message.value.length > 200) {
             alert("Course description too long");
             return false;
         }

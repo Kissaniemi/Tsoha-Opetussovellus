@@ -5,10 +5,13 @@
 Welcome to the site!
 
 {% if session.user_id %}
-You are logged in.
+<p>
+You are logged in as <b>{{ name }}</b>.
 <p>
 <a href="/logout">Logout</a>
 {% else %}
+<p>
+You are not logged in</b>.
 <p>
 <a href="/login">Login</a> 
 {% endif %}
