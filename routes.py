@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, url_for
 from app import app
-import courses, users, materials
+import courses, users, materials, tasks
 from flask import session
 
 
@@ -242,7 +242,6 @@ def change_material(id):
     if request.method == "POST":
         materialname = request.form["materialname"]
         materialtext = request.form["materialtext"]
-
         if len(materialname) > 100:
             return render_template("error.html", error="Material name too long")
         if len(materialtext) > 1000:
@@ -256,3 +255,33 @@ def change_material(id):
         return render_template(
                 "error.html", message="Material change failed")
 
+"""Task related routes"""
+
+@app.route("/course_tasks/<int:id>")
+def get_tasks(id):
+    user_id = users.get_user_id()
+    if not courses.check_course_teacher(user_id, id):
+        if not courses.check_course_student(user_id, id):
+            return render_template(
+                "error.html", message="Only students of this course can see the course tasks")
+    materials = tasks.get_tasks(id)
+    return render_template("tasks.html", id=id, materials=materials)
+
+
+@app.route("/add_tasks/<int:course_id>", methods=["GET", "POST"])
+def create_task(course_id):
+    if request.method == "GET":
+        teacher_id = users.get_user_id()
+        if not courses.check_course_teacher(teacher_id, course_id):
+            return render_template(
+                "error.html", message="Only the course teacher can add material to this course")
+        return render_template("new_task.html", course_id=course_id)
+    
+    if request.method == "POST":
+        question = request.form["question"]
+        choices = request.form.getlist("choice")
+        answers = request.form.getlist("answer")
+        if tasks.add_task_choices(question, course_id, choices, answers):
+                    return redirect(f"/course_tasks/{course_id}")
+        return render_template(
+            "error.html", message="Task creation failed")

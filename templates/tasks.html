@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block title %}Tasks{% endblock %}
+{% block content %}
+
+<h2>Available tasks:</h2>
+<hr>
+{% for material in materials %}
+<i>Task name:</i> {{ material[1] }}
+<p>
+<p>
+<hr>
+<p>
+{% endfor %}
+{% endblock %}

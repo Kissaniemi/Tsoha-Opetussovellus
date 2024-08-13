@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Mainpage{% endblock %}
+{% block title %}Course page{% endblock %}
 {% block content %}
 <p></p>
 Tämä on kurssin <b>{{ info[1] }}</b> pääsivu
@@ -33,6 +33,11 @@ Kurssin esittely: {{ info[3] }}
 <form action="/add_material/{{ info[0] }}" method="get">
 <input type="hidden" name="course_id" value="{{ info[0] }}">
 <input type="submit" value="Add course material">
+</form>
+<p>
+<form action="/add_tasks/{{ info[0] }}" method="get">
+<input type="hidden" name="course_id" value="{{ info[0] }}">
+<input type="submit" value="Add course tasks">
 </form>
 <p>
 <p></p>

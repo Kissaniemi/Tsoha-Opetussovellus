@@ -27,9 +27,15 @@ CREATE TABLE students (
 
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
-    name TEXT,
     question TEXT,
     course_id INTEGER REFERENCES courses
+);
+
+CREATE TABLE choices (
+    id SERIAL PRIMARY KEY,
+    task_id INTEGER REFERENCES tasks,
+    choice TEXT,
+    answer BOOLEAN
 );
 
 CREATE TABLE points (
