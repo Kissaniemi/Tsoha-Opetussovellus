@@ -61,8 +61,10 @@ def join_course(course_id):
 def check_course_teacher(teacher_id, course_id):
     """Checks that the given user_id matches the course teacher_id
     """
-    sql = text("SELECT teacher_id FROM courses WHERE id=:id")
-    result = db.session.execute(sql, {"id": course_id})
+    sql = text("SELECT teacher_id FROM courses WHERE id=:id AND teacher_id=:teacher_id")
+    result = db.session.execute(sql, 
+                                {"id": course_id,
+                                "teacher_id": teacher_id})
     if result.fetchone() is None:
         return False
     return True

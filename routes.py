@@ -97,7 +97,7 @@ def get_course():
 def create_course():
     if request.method == "GET":
             user_type = users.get_user_type()
-            if user_type == False:
+            if user_type[0] == False:
                 return render_template(
                 "error.html", message="Only teachers can make courses")
             return render_template("new_course.html")
@@ -124,7 +124,6 @@ def join():
         if courses.check_course_teacher(user_id, course_id):
             return render_template(
                 "error.html", message="Can't join own course")
-
         if courses.join_course(course_id):
             return redirect("/courses")    # TODO parempi ilmoitus kurssille lisäyksen onnistumisesta
         if not courses.join_course(course_id):
@@ -264,8 +263,8 @@ def get_tasks(id):
         if not courses.check_course_student(user_id, id):
             return render_template(
                 "error.html", message="Only students of this course can see the course tasks")
-    materials = tasks.get_tasks(id)
-    return render_template("tasks.html", id=id, materials=materials)
+    task_info = tasks.get_tasks(id)
+    return render_template("tasks.html", task_id=id, task_info=task_info, length=(len(task_info)))
 
 
 @app.route("/add_tasks/<int:course_id>", methods=["GET", "POST"])
@@ -285,3 +284,24 @@ def create_task(course_id):
                     return redirect(f"/course_tasks/{course_id}")
         return render_template(
             "error.html", message="Task creation failed")
+
+@app.route("/task_page/<int:task_id>", methods=["GET", "POST"])
+def do_task(task_id):
+    if request.method == "GET":
+        task_info = tasks.get_task_info(task_id)
+        task_choices = tasks.get_task_choices(task_id)
+        return render_template("task_page.html", task_info=task_info, task_choices=task_choices, length= len(task_choices))
+    
+    if request.method == "POST":
+        answers = request.form.getlist("answer")
+        choices = tasks.get_task_choices(task_id)
+        user_id = users.get_user_id()
+        if answers != []:
+            if tasks.check_answers(answers, choices):
+                tasks.add_result(user_id, task_id, True)
+                return render_template(
+                "task_result.html", message= "correct", task_id=task_id)
+        
+        tasks.add_result(user_id, task_id, False)
+        return render_template(
+            "task_result.html", message= "incorrect", task_id=task_id)

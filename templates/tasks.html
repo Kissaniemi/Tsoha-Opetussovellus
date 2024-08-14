@@ -4,9 +4,12 @@
 
 <h2>Available tasks:</h2>
 <hr>
-{% for material in materials %}
-<i>Task name:</i> {{ material[1] }}
+{% for i in range (0, length) %}
+<i>Question:</i> {{ task_info[i][1] }}
 <p>
+<form action="/task_page/{{ task_info[i][0] }}" method="get">
+<input type="submit" value="Try exercise">
+</form>
 <p>
 <hr>
 <p>

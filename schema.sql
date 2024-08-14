@@ -38,9 +38,9 @@ CREATE TABLE choices (
     answer BOOLEAN
 );
 
-CREATE TABLE points (
+CREATE TABLE answers (
     id SERIAL PRIMARY KEY,
     student_id INTEGER REFERENCES users,
     task_id INTEGER REFERENCES tasks,
-    points INTEGER
+    correct BOOLEAN
 );

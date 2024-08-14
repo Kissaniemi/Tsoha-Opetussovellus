@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Result page{% endblock %}
+{% block content %}
+<p></p>
+Result for the quiz: {{ message }}
+<p>
+<form action="/task_page/{{ task_id }}" method="get">
+<input type="hidden" name="task_id" value="{{ task_id }}">
+<input type="submit" value="Try again">
+</form>
+<p>
+{% endblock %}
