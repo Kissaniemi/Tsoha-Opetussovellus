@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Student statistics{% endblock %}
+{% block content %}
+Student statistics
+<h3>Course name:</h3> {{ course_info[1] }}
+<p>
+<h3>Course teacher:</h3> {{ teacher }}
+<p>
+<hr>
+<h3>Course task status:</h3> 
+(False if failed, True if passed, Not done yet otherwise)
+<p>
+{% for i in range(0, length) %}
+<p>
+<b>Task:</b> {{ course_tasks[i][1] }}
+<p>
+<b>Task done status:</b> {{ answers[i][1] }}
+<p>
+<br>
+{% endfor %}
+{% endblock %}

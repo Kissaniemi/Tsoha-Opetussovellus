@@ -40,5 +40,9 @@ Kurssin esittely: {{ info[3] }}
 <input type="submit" value="Add course tasks">
 </form>
 <p>
+<form action="/course_statistics/{{ info[0] }}" method="get">
+<input type="submit" value="See course statistics">
+</form>
+<p>
 <p></p>
 {% endblock %}

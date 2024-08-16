@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Teacher statistics{% endblock %}
+{% block content %}
+<p>
+<h3>Course name:</h3> {{ course_info[1] }}
+<p>
+<hr>
+<h3>List of students:</h3>
+{% for student in student_info %}   
+<p>
+{{student}}
+<p>
+{% endfor %}
+<hr>
+<p>
+<h3>Course tasks:</h3>
+<p>
+{% for task in tasks %}  
+<p>
+{{ task[1] }}
+<p>
+{% endfor %}
+<hr>
+<h3>Student task status:</h3>
+<p>
+(False if failed, True if passed, Not done yet otherwise)
+<p>
+{% for student in student_results %}  
+<p>
+<b>Task:</b> {{ student[1][1] }}
+<p>
+<b>Student:</b> {{ student[0] }}
+<p>
+<b>Task status:</b> {{ student[2][1] }}
+<p>
+<br>
+{% endfor %}
+{% endblock %}

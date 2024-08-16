@@ -120,3 +120,30 @@ def change_course(course_id, name, description):
     except BaseException:
         return False
     return True
+
+
+def get_own_courses(user_id):
+    """Returns list of courses that the given user_id has joined
+    """
+    sql = text("SELECT course_id FROM students WHERE user_id=:user_id ")
+    result = db.session.execute(sql, 
+                                {"user_id": user_id})
+    return result.fetchall()
+
+
+def get_teacher_courses(teacher_id):
+    """Returns list of courses that given teacher_id has created
+    """
+    sql = text("SELECT id FROM courses WHERE teacher_id=:teacher_id ")
+    result = db.session.execute(sql,
+                                {"teacher_id": teacher_id})
+    return result.fetchall()
+
+
+def get_course_students(course_id):
+    """Returns list of students joined in the given course_id
+    """
+    sql = text("SELECT user_id FROM students WHERE course_id=:course_id")
+    result = db.session.execute(sql,
+                                {"course_id": course_id})
+    return result.fetchall()

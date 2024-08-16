@@ -6,7 +6,8 @@ from flask import session
 
 @app.route("/")
 def index():
-    name = users.get_user_name()
+    id_user = session.get("user_id", 0)
+    name = users.get_user_name(id_user)
     return render_template("index.html", name=name)
 
 
@@ -89,6 +90,10 @@ def create_teacher():
 
 @app.route("/courses", methods=["GET", "POST"])
 def get_course():
+    id = users.get_user_id()
+    if id == 0:
+        return render_template(
+            "error.html", message="You need to log in first")
     list = courses.get_list()
     return render_template("courses.html", count=len(list), courses=list) 
 
@@ -179,6 +184,57 @@ def change_course(id):
                 return redirect("/courses")
         return render_template(
                 "error.html", message="Course change failed")
+
+
+@app.route("/own_courses", methods=["GET"])
+def own_courses():
+    if request.method == "GET":
+        id = users.get_user_id()
+        if id == 0:
+            return render_template(
+                "error.html", message="You need to log in first")
+
+        user_type = users.get_user_type()
+        if user_type[0] == False:
+            own = courses.get_own_courses(id)
+            course_info = []
+            for course in own:
+                course_info.append(courses.get_course_info(course[0]))    
+            return render_template("own_courses.html", course_info=course_info)
+        else:
+            own = courses.get_teacher_courses(id)
+            course_info = []
+            for course in own:
+                course_info.append(courses.get_course_info(course[0]))    
+            return render_template("own_courses.html", course_info=course_info)
+
+
+@app.route("/course_statistics/<int:course_id>", methods=["GET"])
+def course_statistics(course_id):
+    if request.method == "GET":
+        id = users.get_user_id()
+        user_type = users.get_user_type()
+        if user_type[0] == False:
+            course_info = courses.get_course_info(course_id)
+            teacher = users.get_user_name(course_info[2])
+            course_tasks = tasks.get_tasks(course_id)
+            answers = []
+            for task in course_tasks:
+                    answers.append((tasks.get_answers(id, task[0])))
+            return render_template("student_statistics.html", course_info=course_info, teacher=teacher, course_tasks=course_tasks, answers=answers, length=len(answers))
+        
+        else:
+            course_info = courses.get_course_info(course_id)
+            student_info = courses.get_course_students(course_id)
+            course_tasks = tasks.get_tasks(course_id)
+            students = []
+            student_results = []
+            for student in student_info:
+                students.append(users.get_user_name(student[0]))     
+                for task in course_tasks:
+                    student_results.append((users.get_user_name(student[0]),task, tasks.get_answers(student[0], task[0])))
+
+            return render_template("teacher_statistics.html", course_info=course_info, tasks=course_tasks, student_info=students, student_results=student_results)
 
 
 """ Material related routes """
@@ -284,6 +340,7 @@ def create_task(course_id):
                     return redirect(f"/course_tasks/{course_id}")
         return render_template(
             "error.html", message="Task creation failed")
+
 
 @app.route("/task_page/<int:task_id>", methods=["GET", "POST"])
 def do_task(task_id):

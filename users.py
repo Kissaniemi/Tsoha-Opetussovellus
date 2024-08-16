@@ -87,10 +87,9 @@ def get_user_type():
     return result.fetchone()
 
 
-def get_user_name():
+def get_user_name(id_user):
     """Returns username
     """
-    id_user = session.get("user_id", 0)
     sql = text("SELECT username FROM users WHERE id=:id")
     result = db.session.execute(sql, {"id": id_user})
     result_one = result.fetchone()

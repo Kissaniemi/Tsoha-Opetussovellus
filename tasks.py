@@ -62,7 +62,8 @@ def check_answers(answers, choices):
 
 
 def add_result(student_id, task_id, correct):
-    """ Adds the students task result to the answers table"""
+    """ Adds the students task result to the answers table
+    """
     try:
         if check_result(student_id, task_id):
             sql = text("INSERT INTO answers (student_id, task_id, correct) VALUES (:student_id, :task_id, :correct)")
@@ -81,8 +82,8 @@ def add_result(student_id, task_id, correct):
 
 
 def check_result(student_id, task_id):
-    """Check if students result already exists"""
-
+    """Check if students result already exists
+    """
     sql = text("SELECT id FROM answers WHERE student_id=:student_id AND task_id=:task_id")
     result = db.session.execute(sql, {"student_id": student_id,
                                       "task_id": task_id})
@@ -90,3 +91,16 @@ def check_result(student_id, task_id):
     if not user:
         return True
     return False
+
+
+def get_answers(student_id, task_id):
+    """Returns given students_id and answer to given task, if student has not done task, returns Not done yet if not 
+    """
+    sql = text("SELECT student_id, correct FROM answers WHERE student_id=:student_id AND task_id=:task_id")
+
+    result = db.session.execute(sql, { "student_id":student_id,
+                                     "task_id": task_id})
+    answer = result.fetchone()
+    if not answer:
+        return (student_id, "Not done yet")
+    return answer
