@@ -136,3 +136,26 @@ def check_match(task_id, user_answer):
     if user_answer == answer[0]:
         return True
     return False
+
+
+def delete_task(task_id):
+    """Deletes task and related info"""
+    try:
+        sql = text("DELETE FROM answers WHERE task_id=:task_id")
+        db.session.execute(sql, 
+                    {"task_id": task_id})
+        db.session.commit()
+
+        sql = text("DELETE FROM choices WHERE task_id=:task_id")
+        db.session.execute(sql, 
+                        {"task_id": task_id})
+        db.session.commit()
+        
+        sql = text("DELETE FROM tasks WHERE id=:id")
+        result = db.session.execute(sql, {"id": task_id})
+        db.session.commit()
+
+
+    except BaseException:
+        return False
+    return True

@@ -10,6 +10,9 @@
 <input type="submit" value="Try task">
 </form>
 <p>
+<form action="/delete_task/{{ task_info[i][0] }}" method="post">
+    <input type="submit" value="Delete task">
+    </form>
 <hr>
 <p>
 {% endfor %}

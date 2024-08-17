@@ -2,7 +2,7 @@
     """
 from sqlalchemy.sql import text
 from db import db
-import users
+import users, tasks
 
 # TODO lisää paremmat virheviestit routes:iin sen sijaan että palautetaan vain False
 
@@ -83,16 +83,26 @@ def check_course_student(user_id, course_id):
 
 
 def delete_course(course_id):
-    """Deletes course
+    """Deletes course and all course related info
     """
     try:
-        sql = text("DELETE FROM students WHERE id=:course_id")  # Poistaa nyt myös viittaukset oppilaat tauluun
+        course_tasks = tasks.get_tasks(course_id)
+        for task in course_tasks:
+            tasks.delete_task(task[0])
+
+        sql = text("DELETE FROM materials WHERE course_id=:course_id")
         db.session.execute(sql, 
                             {"course_id": course_id})
         db.session.commit()
-        sql = text("DELETE FROM courses WHERE id=:course_id")
+
+        sql = text("DELETE FROM students WHERE course_id=:course_id")
         db.session.execute(sql, 
                             {"course_id": course_id})
+        db.session.commit()
+
+        sql = text("DELETE FROM courses WHERE id=:id")
+        db.session.execute(sql, 
+                            {"id": course_id})
         db.session.commit()
 
     except BaseException:

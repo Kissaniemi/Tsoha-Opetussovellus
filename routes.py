@@ -143,7 +143,7 @@ def delete_course():
     if request.method == "POST":
         course_id = request.form["course_id"]
         teacher_id = users.get_user_id()
-        if courses.check_course_teacher(teacher_id, course_id):
+        if courses.check_course_teacher(teacher_id, int(course_id)):
             if courses.delete_course(course_id):
                 return redirect("/courses")
         return render_template(
@@ -408,3 +408,15 @@ def choose_task(id):
     if request.method == "GET":
         info = courses.get_course_info(id)
         return render_template("choose_task.html", info=info)
+    
+    
+@app.route("/delete_task/<int:task_id>", methods =["POST"])
+def delete_task(task_id):
+    if request.method == "POST":
+        teacher_id = users.get_user_id()
+        task_info = tasks.get_task_info(task_id)
+        if courses.check_course_teacher(teacher_id, task_info[2]):
+            if tasks.delete_task(task_id):
+                return redirect(f"/course_tasks/{task_info[2]}")
+        return render_template(
+                "error.html", message="Only the teacher of this course can delete tasks")

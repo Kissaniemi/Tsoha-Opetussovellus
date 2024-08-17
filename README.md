@@ -2,13 +2,19 @@
 
 ## Välipalautus
 
-Harjoitustyö on vielä ihan vaiheessa, kirjoitettua koodia on enemmänkin, mutta tänne päivitettynä nyt vain se mikä toimii. Tietokantataulut alustavat ja todennäköisesti muuttuvat. Sivun ulkoasuun ei koskettu, tarkoitus saada muu toiminnallisuus kuntoon ennen sitä.
+Sovelluksen toiminnallisuus pitäisi olla viimeistelyjä vaille valmis. Tarkoitus kurssin loppuajan keskittyä sovelluksen ulkonäköön ja virheiden löytämiseen ja korjaamiseen, tietoturvaan ja siihen ettei käyttäjillä ole pääsyä sellaiseen tietoon ja sivuihin joihin tällä ei ole oikeuksia. 
 
-Sovelluksen toiminta ominaisuuksista valmiina:
- - Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.   
- - Opiskelija näkee listan kursseista ja voi liittyä kurssille.   
- - Opettaja pystyy luomaan uuden kurssin ja poistamaan sen.
+Sovellus täyttää tällä hetkellä ominaisuuksiltaan alussa asetetut vaatimukset eli:
+- Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
+- Opiskelija näkee listan kursseista ja voi liittyä kurssille.
+- Opiskelija voi lukea kurssin tekstimateriaalia sekä ratkoa kurssin tehtäviä.
+- Opiskelija pystyy näkemään tilaston, mitkä kurssin tehtävät hän on ratkonut.
+- Opettaja pystyy luomaan uuden kurssin, muuttamaan olemassa olevaa kurssia ja poistamaan kurssin.
+- Opettaja pystyy lisäämään kurssille tekstimateriaalia ja tehtäviä. Tehtävä voi olla ainakin monivalinta tai tekstikenttä, johon tulee kirjoittaa oikea vastaus.
+- Opettaja pystyy näkemään kurssistaan tilaston, keitä opiskelijoita on kurssilla ja mitkä kurssin tehtävät kukin on ratkonut."
 
+Ominaisuuksia joita olisi kiva vielä lisätä:
+- Kuvat
 
 ### Käynnistysohje
 
@@ -35,18 +41,8 @@ flask run
 
 ## Harjoitustyön aihe
 
-Harjoitustyön aihe on valittu kurssiin valmiista aihe-ehdotuksista, Opetussovellus, ja sen ominaisuudet ovat samat:
+Harjoitustyön aihe on valittu kurssiin valmiista aihe-ehdotuksista, Opetussovellus, ja sen ominaisuudet ovat samat.
 
-"Sovelluksen avulla voidaan järjestää verkkokursseja, joissa on tekstimateriaalia ja automaattisesti tarkastettavia tehtäviä. Jokainen käyttäjä on opettaja tai opiskelija.
-
-Sovelluksen ominaisuuksia:
-
-- Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
-- Opiskelija näkee listan kursseista ja voi liittyä kurssille.
-- Opiskelija voi lukea kurssin tekstimateriaalia sekä ratkoa kurssin tehtäviä.
-- Opiskelija pystyy näkemään tilaston, mitkä kurssin tehtävät hän on ratkonut.
-- Opettaja pystyy luomaan uuden kurssin, muuttamaan olemassa olevaa kurssia ja poistamaan kurssin.
-- Opettaja pystyy lisäämään kurssille tekstimateriaalia ja tehtäviä. Tehtävä voi olla ainakin monivalinta tai tekstikenttä, johon tulee kirjoittaa oikea vastaus.
-- Opettaja pystyy näkemään kurssistaan tilaston, keitä opiskelijoita on kurssilla ja mitkä kurssin tehtävät kukin on ratkonut."
+"Sovelluksen avulla voidaan järjestää verkkokursseja, joissa on tekstimateriaalia ja automaattisesti tarkastettavia tehtäviä. Jokainen käyttäjä on opettaja tai opiskelija."
 
 Lisäksi sovelluksessa olisi tarkoitus pystyä lisäämään myös kuvatehtäviä.
