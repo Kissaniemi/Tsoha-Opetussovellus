@@ -15,13 +15,11 @@ Kurssin esittely: {{ info[3] }}
 </form>
 <p>
 <form action="/course_tasks/{{ info[0] }}" method="get">
-<input type="hidden" name="course_id" value="{{ info[0] }}">
 <input type="submit" value="Course tasks">
 </form>
 <p>
 <hr>
 <form action="/change_course/{{ info[0] }}" method="get">
-<input type="hidden" name="course_id" value="{{ info[0] }}">
 <input type="submit" value="Change course name/description">
 </form>
 <p>
@@ -31,12 +29,10 @@ Kurssin esittely: {{ info[3] }}
 </form>
 <p>
 <form action="/add_material/{{ info[0] }}" method="get">
-<input type="hidden" name="course_id" value="{{ info[0] }}">
 <input type="submit" value="Add course material">
 </form>
 <p>
-<form action="/add_tasks/{{ info[0] }}" method="get">
-<input type="hidden" name="course_id" value="{{ info[0] }}">
+<form action="/choose_task/{{ info[0] }}" method="get">
 <input type="submit" value="Add course tasks">
 </form>
 <p>

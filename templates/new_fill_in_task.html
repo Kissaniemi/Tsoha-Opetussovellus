@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}New task{% endblock %}
+{% block content %}
+<form action="/add_fill_in/{{ course_id }}" method="post">
+<p>
+<h3>Fill-in-correct-answer task</h3>
+<p>
+Write the task question in the question field. 
+<p>
+Write the correct answer in the field under that. 
+<p></p>
+(It is best to write the answer as single word, without capital letters and without special characters).
+<p>
+<p>Question (5-100 characters):<br>
+<input type="text" name="question" required minlength="5" maxlength="100"></p>
+<p>
+<p>Answer (5-30 characters):<br>
+<input type="text" name="answer" required minlength="5" maxlength="30"></p>
+<input type="submit" value="Add task">
+</form>
+{% endblock %}

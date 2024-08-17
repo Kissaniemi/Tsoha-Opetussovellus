@@ -1,14 +1,13 @@
 {% extends "layout.html" %}
 {% block title %}Tasks{% endblock %}
 {% block content %}
-
 <h2>Available tasks:</h2>
 <hr>
 {% for i in range (0, length) %}
 <i>Question:</i> {{ task_info[i][1] }}
 <p>
-<form action="/task_page/{{ task_info[i][0] }}" method="get">
-<input type="submit" value="Try exercise">
+<form action="/task_page/{{ course_id }}/{{ task_info[i][0] }}" method="get">
+<input type="submit" value="Try task">
 </form>
 <p>
 <hr>

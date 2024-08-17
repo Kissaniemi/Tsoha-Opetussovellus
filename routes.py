@@ -320,45 +320,91 @@ def get_tasks(id):
             return render_template(
                 "error.html", message="Only students of this course can see the course tasks")
     task_info = tasks.get_tasks(id)
-    return render_template("tasks.html", task_id=id, task_info=task_info, length=(len(task_info)))
+    return render_template("tasks.html", course_id=id, task_info=task_info, length=(len(task_info)))
 
 
-@app.route("/add_tasks/<int:course_id>", methods=["GET", "POST"])
-def create_task(course_id):
+@app.route("/add_multiple_choice/<int:course_id>", methods=["GET", "POST"])
+def add_multiple_choice(course_id):
     if request.method == "GET":
         teacher_id = users.get_user_id()
         if not courses.check_course_teacher(teacher_id, course_id):
             return render_template(
-                "error.html", message="Only the course teacher can add material to this course")
-        return render_template("new_task.html", course_id=course_id)
+                "error.html", message="Only the course teacher can add tasks to this course")
+        return render_template("new_multiple_choice_task.html", course_id=course_id)
     
     if request.method == "POST":
         question = request.form["question"]
         choices = request.form.getlist("choice")
         answers = request.form.getlist("answer")
-        if tasks.add_task_choices(question, course_id, choices, answers):
+        task_id = tasks.add_task(question, course_id, "multiple choice")
+        if tasks.add_task_choices(task_id, choices, answers):
                     return redirect(f"/course_tasks/{course_id}")
         return render_template(
             "error.html", message="Task creation failed")
 
 
-@app.route("/task_page/<int:task_id>", methods=["GET", "POST"])
-def do_task(task_id):
+@app.route("/add_fill_in/<int:course_id>", methods=["GET", "POST"])
+def add_fill_in(course_id):
     if request.method == "GET":
-        task_info = tasks.get_task_info(task_id)
-        task_choices = tasks.get_task_choices(task_id)
-        return render_template("task_page.html", task_info=task_info, task_choices=task_choices, length= len(task_choices))
+        teacher_id = users.get_user_id()
+        if not courses.check_course_teacher(teacher_id, course_id):
+            return render_template(
+                "error.html", message="Only the course teacher can add tasks to this course")
+        return render_template("new_fill_in_task.html", course_id=course_id)
     
     if request.method == "POST":
-        answers = request.form.getlist("answer")
-        choices = tasks.get_task_choices(task_id)
+        question = request.form["question"]
+        choice = request.form["answer"]
+        task_id = tasks.add_task(question, course_id, "fill in")
+        if tasks.add_task_choice(task_id, choice):
+                    return redirect(f"/course_tasks/{course_id}")
+        return render_template(
+            "error.html", message="Task creation failed")
+
+
+@app.route("/task_page/<int:course_id>/<int:task_id>", methods=["GET", "POST"])
+def do_task(task_id, course_id):
+    if request.method == "GET":
         user_id = users.get_user_id()
-        if answers != []:
-            if tasks.check_answers(answers, choices):
+        if not courses.check_course_student(user_id, course_id):
+            return render_template(
+                "error.html", message="Only students can try the course tasks")
+        task_info = tasks.get_task_info(task_id)
+        task_choices = tasks.get_task_choices(task_id)
+        if task_info[3] == "multiple choice":
+            return render_template("task_page_multiple_choice.html", task_info=task_info, task_choices=task_choices, length= len(task_choices), course_id=course_id)
+        if task_info[3] == "fill in":
+            return render_template("task_page_fill_in.html", task_info=task_info, course_id=course_id)
+
+    if request.method == "POST":
+        task_info = tasks.get_task_info(task_id)
+        if task_info[3] == "multiple choice":
+            task_choices = tasks.get_task_choices(task_id)
+            answers = request.form.getlist("answer")
+            choices = tasks.get_task_choices(task_id)
+            user_id = users.get_user_id()
+            if answers != []:
+                if tasks.check_answers(answers, choices):
+                    tasks.add_result(user_id, task_id, True)
+                    return render_template(
+                    "task_result.html", message= "correct", task_id=task_id, course_id=course_id)
+            tasks.add_result(user_id, task_id, False)
+            return render_template(
+                "task_result.html", message= "incorrect", task_id=task_id, course_id=course_id)
+        else:
+            answer = request.form["answer"]
+            user_id = users.get_user_id()
+            if tasks.check_match(task_id, answer):
                 tasks.add_result(user_id, task_id, True)
                 return render_template(
-                "task_result.html", message= "correct", task_id=task_id)
+                "task_result.html", message= "correct", task_id=task_id, course_id=course_id)
+            tasks.add_result(user_id, task_id, False)
+            return render_template(
+                "task_result.html", message= "incorrect", task_id=task_id, course_id=course_id)
         
-        tasks.add_result(user_id, task_id, False)
-        return render_template(
-            "task_result.html", message= "incorrect", task_id=task_id)
+
+@app.route("/choose_task/<int:id>", methods=["GET"])
+def choose_task(id):
+    if request.method == "GET":
+        info = courses.get_course_info(id)
+        return render_template("choose_task.html", info=info)

@@ -1,30 +1,30 @@
 {% extends "layout.html" %}
-{% block title %}New task{% endblock %}
+{% block title %}New multiple chocie task{% endblock %}
 {% block content %}
-<form action="/add_tasks//{{ course_id }}" method="post">
+<form action="/add_multiple_choice/{{ course_id }}" method="post">
 <p>
-    <h3>Multiple choice question</h3>
+<h3>Multiple choice task</h3>
 <p>
 Write the task question in the question field. 
 <p>
 Write the choices in the fields under that (blank fields will be ignored).
 <p>
-Mark correct answer(s) with the check box next to the choice.
+Mark correct answer with the checkbox next to the choice (You can only choose one).
 <p>Question (5-100 characters):<br>
 <input type="text" name="question" required minlength="5" maxlength="100"></p>
 <p>Choice 1:<br>
 <input type="text" name="choice">
-<input type="checkbox" name="answer" value="0"></p>
+<input type="radio" name="answer" value="0" checked></p>
 <p>Choice 2:<br>
 <input type="text" name="choice">
-<input type="checkbox" name="answer" value="1"></p>
+<input type="radio" name="answer" value="1"></p>
 <p>Choice 3:<br>
 <input type="text" name="choice">
-<input type="checkbox" name="answer" value="2"></p>
+<input type="radio" name="answer" value="2"></p>
 <p>Choice 4:<br>
 <input type="text" name="choice">
-<input type="checkbox" name="answer" value="3"></p>
-<input type="submit" value="Create task">
+<input type="radio" name="answer" value="3"></p>
+<input type="submit" value="Add task">
 </form>
 
 {% endblock %}

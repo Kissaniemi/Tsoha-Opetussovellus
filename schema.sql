@@ -28,7 +28,8 @@ CREATE TABLE students (
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     question TEXT,
-    course_id INTEGER REFERENCES courses
+    course_id INTEGER REFERENCES courses,
+    task_type TEXT
 );
 
 CREATE TABLE choices (

@@ -12,17 +12,24 @@ def get_tasks(course_id):
     return result.fetchall()
 
 
-def add_task_choices(question, course_id, choices, answers):
-    """Add a multiple choice task to the course
+def add_task(question, course_id, task_type):
+    """Add task to course
+    """
+    sql = text("INSERT INTO tasks (question, course_id, task_type) VALUES(:question,:course_id,:task_type) RETURNING id")
+    result = db.session.execute(sql,
+                            {
+                            "question": question,
+                            "course_id": course_id,
+                            "task_type": task_type})
+
+    db.session.commit()
+    return result.fetchone()[0]
+
+
+def add_task_choices(task_id, choices, answers):
+    """Add multiple choice task choices
     """
     try:
-        sql = text("INSERT INTO tasks (question, course_id) VALUES(:question,:course_id) RETURNING id")
-        result = db.session.execute(sql,
-                                {
-                                "question": question,
-                                "course_id": course_id})
-        task_id = result.fetchone()[0]
-
         for i in range(0, len(choices)):
             if choices[i] != "":
                 sql = text("INSERT INTO choices (task_id, choice, answer) VALUES (:task_id, :choice, :answer)")
@@ -37,10 +44,23 @@ def add_task_choices(question, course_id, choices, answers):
     return True
 
 
+def add_task_choice(task_id, choice):
+    """Add fill-in-answer task choice
+    """
+    try:
+        sql = text("INSERT INTO choices (task_id, choice, answer) VALUES (:task_id, :choice, :answer)")
+        db.session.execute(sql, {"task_id":task_id, "choice":choice, "answer": True})
+        db.session.commit()
+
+    except BaseException:
+        return False
+    return True
+
+
 def get_task_info(task_id):
     """Returns task with the given id
     """
-    sql = text("SELECT id, question, course_id FROM tasks WHERE id=:id")
+    sql = text("SELECT id, question, course_id, task_type FROM tasks WHERE id=:id")
     result = db.session.execute(sql, {"id": task_id})
     return result.fetchone()
 
@@ -98,9 +118,21 @@ def get_answers(student_id, task_id):
     """
     sql = text("SELECT student_id, correct FROM answers WHERE student_id=:student_id AND task_id=:task_id")
 
-    result = db.session.execute(sql, { "student_id":student_id,
+    result = db.session.execute(sql, {"student_id":student_id,
                                      "task_id": task_id})
     answer = result.fetchone()
     if not answer:
         return (student_id, "Not done yet")
     return answer
+
+
+def check_match(task_id, user_answer):
+    """ For fill-in-answer to check if the answer matches
+    """
+    sql = text("SELECT choice FROM choices WHERE task_id=:task_id")
+    result = db.session.execute(sql, {"task_id": task_id})
+
+    answer = result.fetchone()
+    if user_answer == answer[0]:
+        return True
+    return False
