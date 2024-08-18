@@ -45,7 +45,7 @@ def register(username, password, user_type):
         type_user (Boolean): check to see if user has teacher rights
 
     Returns:
-        : returns False if registering failed, calls login function if not
+        : returns False if registering failed, True if not
     """
     hash_value = generate_password_hash(password)
     try:
@@ -66,13 +66,7 @@ def register(username, password, user_type):
         db.session.commit()
     except BaseException:
         return False
-    return login(username, password)
-
-
-def get_user_id():
-    """Returns user id
-    """
-    return session.get("user_id", 0)
+    return True
 
 
 def get_user_type():

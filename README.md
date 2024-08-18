@@ -2,7 +2,7 @@
 
 ## Välipalautus
 
-Sovelluksen toiminnallisuus pitäisi olla viimeistelyjä vaille valmis. Tarkoitus kurssin loppuajan keskittyä sovelluksen ulkonäköön ja virheiden löytämiseen ja korjaamiseen, tietoturvaan ja siihen ettei käyttäjillä ole pääsyä sellaiseen tietoon ja sivuihin joihin tällä ei ole oikeuksia. 
+Sovelluksen perustoiminnallisuus pitäisi olla viimeistelyjä vaille valmis. Tarkoitus kurssin loppuajan keskittyä sovelluksen ulkonäköön ja virheiden löytämiseen ja korjaamiseen, tietoturvaan ja siihen, ettei käyttäjällä ole pääsyä sellaiseen tietoon ja sivuihin, joihin tällä ei ole oikeuksia. Yleisesti tarkoitus tehdä muutoksia, jotka parantavat käytettävyyttä.
 
 Sovellus täyttää tällä hetkellä ominaisuuksiltaan alussa asetetut vaatimukset eli:
 - Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
@@ -14,7 +14,7 @@ Sovellus täyttää tällä hetkellä ominaisuuksiltaan alussa asetetut vaatimuk
 - Opettaja pystyy näkemään kurssistaan tilaston, keitä opiskelijoita on kurssilla ja mitkä kurssin tehtävät kukin on ratkonut."
 
 Ominaisuuksia joita olisi kiva vielä lisätä:
-- Kuvat
+- Kuvien lisäys materiaaliin ja tehtäviin
 
 ### Käynnistysohje
 
@@ -38,6 +38,10 @@ psql < schema.sql
 
 flask run
 
+
+### Sovelluksen testaamisesta ja testimateriaalista
+
+Sovelluksen mukana on testausta varten opettaja-tunnus ja oppilas-tunnus, sekä pienimuotoinen Japanin kanji-"kurssi", eli tekstimateriaalia ja tehtäviä tekstimateriaaliin liittyen. Materiaali perustuu Basic Kanji Book, vol. 1:seen. Materiaali ja siihen liittyvät tehtävät ovat oikeellisia, mutta ne on tarkoitettu lähinnä ohjelman testaus ja debugaus-käyttöön. Tunnustiedot ja muut löytyvät debug.py:stä.
 
 ## Harjoitustyön aihe
 

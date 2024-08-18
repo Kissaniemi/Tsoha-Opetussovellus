@@ -2,9 +2,8 @@
     """
 from sqlalchemy.sql import text
 from db import db
-import users, tasks
+import tasks
 
-# TODO lisää paremmat virheviestit routes:iin sen sijaan että palautetaan vain False
 
 def get_list():
     """Returns all courses (if available)
@@ -13,10 +12,9 @@ def get_list():
     result = db.session.execute(sql)
     return result.fetchall()
 
-def create_new(name, description):
+def create_new(name, description, user_id):
     """Create a new course
     """
-    user_id = users.get_user_id()
     try:
         sql = text("SELECT name FROM courses WHERE name=:name")
         result = db.session.execute(sql, {"name": name})
@@ -35,10 +33,9 @@ def create_new(name, description):
         return False
     return True
 
-def join_course(course_id):
+def join_course(course_id, user_id):
     """Join course
     """
-    user_id = users.get_user_id()
     try:
         sql = text("SELECT id FROM students WHERE user_id=:user_id AND course_id=:course_id ")
         result = db.session.execute(sql, 
