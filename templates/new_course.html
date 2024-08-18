@@ -11,20 +11,5 @@ Course description (5-200 characters): <br>
 <br>
 <input type="submit" value="Create new course">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-<script>
-    function check(form) {
-        if (form.title.value.length > 40) {
-            alert("Course name too long");
-            return false;
-        }
-        if (form.message.value.length > 200) {
-            alert("Course description too long");
-            return false;
-        }
-        return true;
-    }
-    </script>
-    
-    
+</form>  
 {% endblock %}
