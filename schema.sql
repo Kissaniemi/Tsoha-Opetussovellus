@@ -2,7 +2,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
     password TEXT,
-    teacher BOOLEAN
+    teacher BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE courses (
@@ -36,12 +36,12 @@ CREATE TABLE choices (
     id SERIAL PRIMARY KEY,
     task_id INTEGER REFERENCES tasks,
     choice TEXT,
-    answer BOOLEAN
+    answer BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE answers (
     id SERIAL PRIMARY KEY,
     student_id INTEGER REFERENCES users,
     task_id INTEGER REFERENCES tasks,
-    correct BOOLEAN
+    correct BOOLEAN DEFAULT FALSE
 );

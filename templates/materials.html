@@ -6,10 +6,11 @@
 {% for mat in material %}
 <i>Material name:</i> {{ mat[1] }}
 <p>
-<i>Material text:</i> {{ mat[2] }}
+<i>Material:</i>
+<a href="/material_page/{{ mat[3] }}/{{ mat[0] }}"> Read material </a>
 <p>
 {% if teacher %}
-<form action="/delete_material/{{ mat[0] }}" method="post">
+<form action="/delete_material/{{ mat[0] }}" method="post" onclick="return confirm('Are you sure you want to delete the task?')">
 <input type="submit" value="Delete material">
 <input type="hidden" name="course_id" value="{{ mat[3] }}">
 <input type="hidden" name="mat_id" value="{{ mat[0] }}">
@@ -23,4 +24,7 @@
 <hr>
 <p>
 {% endfor %}
+<form action="/course_page/{{ id }}" method="post">
+<input type="submit" value="Back to course page">
+</form>
 {% endblock %}

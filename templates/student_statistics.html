@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 {% block title %}Student statistics{% endblock %}
 {% block content %}
-Student statistics
+<form action="/course_page/{{ course_info[0] }}" method="post">
+<input type="submit" value="Back to course page">
+</form>
+<hr>
+<p>
 <h3>Course name:</h3> {{ course_info[1] }}
 <p>
 <h3>Course teacher:</h3> {{ teacher }}

@@ -11,11 +11,14 @@
 </form>
 <p>
 {% if teacher %}  
-<form action="/delete_task/{{ task_info[i][0] }}" method="post">
+<form action="/delete_task/{{ task_info[i][0] }}" method="post" onclick="return confirm('Are you sure you want to delete the task?')">
 <input type="submit" value="Delete task">
 </form>
-    {% endif %}    
+{% endif %}    
 <hr>
 <p>
 {% endfor %}
+<form action="/course_page/{{ course_id }}" method="post">
+<input type="submit" value="Back to course page">
+</form>
 {% endblock %}

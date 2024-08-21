@@ -2,6 +2,11 @@
 {% block title %}Teacher statistics{% endblock %}
 {% block content %}
 <p>
+<form action="/course_page/{{ course_info[0] }}" method="post">
+<input type="submit" value="Back to course page">
+</form>
+<hr>
+<p>
 <h3>Course name:</h3> {{ course_info[1] }}
 <p>
 <hr>

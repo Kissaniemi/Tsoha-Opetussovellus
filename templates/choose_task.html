@@ -7,4 +7,9 @@ Do you want to add a multiple choice task or a fill-in-correct-answer task?
 <a href="/add_multiple_choice/{{ info[0] }}">Add multiple choice task </a>
 <p>
 <a href="/add_fill_in/{{ info[0] }}">Add fill-in-correct-answer task</a>
+<hr>
+<p>
+<form action="/course_page/{{ id }}" method="post">
+<input type="submit" value="Back to course page">
+</form>
 {% endblock %}

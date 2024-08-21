@@ -2,9 +2,9 @@
 {% block title %}Course page{% endblock %}
 {% block content %}
 <p></p>
-Tämä on kurssin <b>{{ info[1] }}</b> pääsivu
+This is course <b>{{ info[1] }}</b> mainpage
 <p>
-Kurssin esittely: {{ info[3] }} 
+<i>Course description:</i> {{ info[3] }} 
 <form action="/join_course" method="post">
 <input type="hidden" name="course_id" value="{{ info[0] }}">
 <input type="submit" value="Join course">
@@ -18,13 +18,17 @@ Kurssin esittely: {{ info[3] }}
 <input type="submit" value="Course tasks">
 </form>
 <p>
+<form action="/course_statistics/{{ info[0] }}" method="get">
+<input type="submit" value="See course statistics">
+</form>
+<p>
 {% if teacher %}    
 <hr>
 <form action="/change_course/{{ info[0] }}" method="get">
 <input type="submit" value="Change course name/description">
 </form>
 <p>
-<form action="/delete_course" method="post">
+<form action="/delete_course" method="post" onclick="return confirm('Are you sure you want to delete the course and all related material and tasks?')">
 <input type="hidden" name="course_id" value="{{ info[0] }}">
 <input type="submit" value="Delete course">
 </form>
@@ -35,10 +39,6 @@ Kurssin esittely: {{ info[3] }}
 <p>
 <form action="/choose_task/{{ info[0] }}" method="get">
 <input type="submit" value="Add course tasks">
-</form>
-<p>
-<form action="/course_statistics/{{ info[0] }}" method="get">
-<input type="submit" value="See course statistics">
 </form>
 <p>
 {% endif %}

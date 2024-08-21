@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %}Course page{% endblock %}
+{% block content %}
+
+Material: {{ material[2] }} 
+<hr>
+<p>
+<form action="/course_page/{{ id }}" method="post">
+<input type="submit" value="Back to course page">
+</form>
+{% endblock %}

@@ -24,7 +24,7 @@ def get_materials(course_id):
     """Get all course materials (related to the given course)
     """
 
-    sql = text("SELECT id, name, material FROM materials WHERE course_id=:course_id ")
+    sql = text("SELECT id, name, material, course_id FROM materials WHERE course_id=:course_id ")
     result = db.session.execute(sql, 
                                 {"course_id": course_id})
     return result.fetchall()

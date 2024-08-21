@@ -4,10 +4,10 @@
 <h3>Change material</h3>
 <p>
 <form action="/change_material/{{ info.id }}" method="post">
-Material name (5-30 characters): <input type="text" name="materialname" required minlength="5" maxlength="30">
+Material name (5-30 characters): <input type="text" value="{{ info.name }}" name="materialname" required minlength="5" maxlength="30">
 <p>
 Text material (5-500 characters): <br>
-<textarea name="materialtext" required minlength="5" maxlength="500" ></textarea>
+<textarea name="materialtext" required minlength="5" maxlength="500" >{{ info.material }}</textarea>
 <br>
 <input type="hidden" name="course_id" value="{{ info.course_id }}">
 <input type="submit" value="Update material">

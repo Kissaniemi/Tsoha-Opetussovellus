@@ -273,6 +273,17 @@ def get_material(id):
     return render_template("materials.html", id=id, material=material, teacher=teacher[0])
 
 
+@app.route("/material_page/<int:id>/<material_id>")
+def material_page(id, material_id):
+    user_id = session.get("user_id", 0)
+    if not courses.check_course_teacher(user_id, id):
+        if not courses.check_course_student(user_id, id):
+            return render_template(
+                "error.html", message="Only students of this course can see the course material")
+    material = materials.get_material_info(material_id)
+    return render_template("material_page.html", id=id, material=material)
+
+
 @app.route("/delete_material/<int:mat_id>", methods =["POST"])
 def delete_material(mat_id):
     if request.method == "POST":
@@ -414,7 +425,7 @@ def do_task(task_id, course_id):
 def choose_task(id):
     if request.method == "GET":
         info = courses.get_course_info(id)
-        return render_template("choose_task.html", info=info)
+        return render_template("choose_task.html", info=info, id=id)
     
     
 @app.route("/delete_task/<int:task_id>", methods =["POST"])

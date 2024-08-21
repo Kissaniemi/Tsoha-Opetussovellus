@@ -6,12 +6,17 @@
 <form action="/change_course/{{ info.id }}" method="post">
 <input type="hidden" name="course_id" value="{{ info[0] }}">
 <p>
-Course name: <input type="text" name="coursename" required minlength="5" maxlength="40">
+Course name: <input type="text" name="coursename" value="{{ info.name }}"required minlength="5" maxlength="40">
 <p>
 Course description: <br>
-<textarea name="description" required minlength="5" maxlength="200"></textarea>
+<textarea type = "text" name="description" required minlength="5" maxlength="200"> {{ info.description }}</textarea>
 <br>
 <input type="submit" value="Change course">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<hr>
+<p>
+<form action="/course_page/{{ info.id }}" method="post">
+<input type="submit" value="Back to course page">
 </form>
 {% endblock %}

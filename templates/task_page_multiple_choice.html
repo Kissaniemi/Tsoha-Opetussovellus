@@ -8,7 +8,7 @@ Question: {{ task_info[1] }} </p>
 <form action="/task_page/{{ course_id }}/{{ task_info[0] }}" method="post">
 {% for i in range(0, length) %}
 <p>
-{{ task_choices[i][0] }} <input type="radio" name="answer" value={{ i }}>
+{{ task_choices[i][0] }} <input type="radio" name="answer" value="{{ i }}">
 </p>
 {% endfor %}
 <p>

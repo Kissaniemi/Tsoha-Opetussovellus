@@ -4,8 +4,10 @@
 <a href="/">Main page</a>
 <a href="/login">Login</a>
 <a href="/create_users">Create user profile</a>
+{% if session.user_id %}
 <a href="/courses">Courses</a>
 <a href="/own_courses">Own courses</a>
 <hr>
+{% endif %}
 {% block content %}{% endblock %}
 <hr>
