@@ -18,6 +18,7 @@ Kurssin esittely: {{ info[3] }}
 <input type="submit" value="Course tasks">
 </form>
 <p>
+{% if teacher==True %}    
 <hr>
 <form action="/change_course/{{ info[0] }}" method="get">
 <input type="submit" value="Change course name/description">
@@ -40,5 +41,6 @@ Kurssin esittely: {{ info[3] }}
 <input type="submit" value="See course statistics">
 </form>
 <p>
+{% endif %}
 <p>
 {% endblock %}

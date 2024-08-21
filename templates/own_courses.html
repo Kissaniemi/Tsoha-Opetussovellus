@@ -23,4 +23,9 @@ Course description {{ info[3] }}
 {% else %}
 You haven't joined any courses yet.
 {% endif %}
+{% if session.user_id %}
+<p>
+<a href="/logout">Logout</a>
+{% else %}
+{% endif %}
 {% endblock %}

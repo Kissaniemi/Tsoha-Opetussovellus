@@ -8,4 +8,8 @@ Result for the quiz: {{ message }}
 <input type="submit" value="Try again">
 </form>
 <p>
+<form action="/course_tasks/{{ course_id }}" method="get">
+<input type="submit" value="Back to tasks">
+</form>
+<p>
 {% endblock %}

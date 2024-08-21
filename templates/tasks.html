@@ -10,9 +10,11 @@
 <input type="submit" value="Try task">
 </form>
 <p>
+{% if teacher==True %}  
 <form action="/delete_task/{{ task_info[i][0] }}" method="post">
 <input type="submit" value="Delete task">
 </form>
+    {% endif %}    
 <hr>
 <p>
 {% endfor %}

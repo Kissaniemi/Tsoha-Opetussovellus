@@ -7,4 +7,10 @@ Do you want to create a new student profile or teacher profile?
 <a href="/create_student">Create student profile</a>
 <p>
 <a href="/create_teacher">Create teacher profile</a>
+<hr>
+{% if session.user_id %}
+<p>
+<a href="/logout">Logout</a>
+{% else %}
+{% endif %}
 {% endblock %}
