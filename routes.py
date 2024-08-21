@@ -98,7 +98,7 @@ def get_course():
             "error.html", message="You need to log in first")
     list = courses.get_list()
     teacher = users.get_user_type()
-    return render_template("courses.html", count=len(list), courses=list, teacher=teacher) 
+    return render_template("courses.html", count=len(list), courses=list, teacher=teacher[0]) 
 
 
 @app.route("/create_course", methods=["GET", "POST"])
@@ -158,7 +158,7 @@ def delete_course():
 def course_page(id):
     info = courses.get_course_info(id)
     teacher = users.get_user_type()
-    return render_template("course_page.html", info=info, teacher=teacher)
+    return render_template("course_page.html", info=info, teacher=teacher[0])
 
 
 @app.route("/change_course/<int:id>", methods=["GET", "POST"])
@@ -269,7 +269,8 @@ def get_material(id):
             return render_template(
                 "error.html", message="Only students of this course can see the course material")
     material = materials.get_materials(id)
-    return render_template("materials.html", id=id, material=material)
+    teacher = users.get_user_type()
+    return render_template("materials.html", id=id, material=material, teacher=teacher[0])
 
 
 @app.route("/delete_material/<int:mat_id>", methods =["POST"])
@@ -326,7 +327,7 @@ def get_tasks(id):
                 "error.html", message="Only students of this course can see the course tasks")
     task_info = tasks.get_tasks(id)
     teacher = users.get_user_type()
-    return render_template("tasks.html", course_id=id, task_info=task_info, length=(len(task_info)), teacher=teacher)
+    return render_template("tasks.html", course_id=id, task_info=task_info, length=(len(task_info)), teacher=teacher[0])
 
 
 @app.route("/add_multiple_choice/<int:course_id>", methods=["GET", "POST"])

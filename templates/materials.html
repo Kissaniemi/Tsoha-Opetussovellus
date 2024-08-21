@@ -8,7 +8,7 @@
 <p>
 <i>Material text:</i> {{ mat[2] }}
 <p>
-{% if teacher==True %}
+{% if teacher %}
 <form action="/delete_material/{{ mat[0] }}" method="post">
 <input type="submit" value="Delete material">
 <input type="hidden" name="course_id" value="{{ mat[3] }}">
