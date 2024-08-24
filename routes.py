@@ -261,27 +261,33 @@ def add_material(id):
             return render_template("error.html", message="Creating course material failed")
 
 
-@app.route("/course_material/<int:id>", methods=["GET", "POST"])
-def get_material(id):
+@app.route("/course_material/<int:course_id>", methods=["GET", "POST"])
+def get_material(course_id):
     user_id = session.get("user_id", 0)
-    if not courses.check_course_teacher(user_id, id):
-        if not courses.check_course_student(user_id, id):
+    if not courses.check_course_teacher(user_id, course_id):
+        if not courses.check_course_student(user_id, course_id):
             return render_template(
                 "error.html", message="Only students of this course can see the course material")
-    material = materials.get_materials(id)
+    material = materials.get_materials(course_id)
     teacher = users.get_user_type()
-    return render_template("materials.html", id=id, material=material, teacher=teacher[0])
+    return render_template("materials.html", course_id=course_id, material=material, teacher=teacher[0])
 
 
-@app.route("/material_page/<int:id>/<material_id>")
-def material_page(id, material_id):
+@app.route("/material_page/<int:course_id>/<int:material_id>")
+def material_page(course_id, material_id):
     user_id = session.get("user_id", 0)
-    if not courses.check_course_teacher(user_id, id):
-        if not courses.check_course_student(user_id, id):
+    if not courses.check_course_teacher(user_id, course_id):
+        if not courses.check_course_student(user_id, course_id):
             return render_template(
                 "error.html", message="Only students of this course can see the course material")
     material = materials.get_material_info(material_id)
-    return render_template("material_page.html", id=id, material=material)
+    max_count = materials.get_max_id(course_id)
+    next_material = None
+    for i in range(material_id+1, max_count+1):
+        if materials.get_material_info(i):
+            next_material = i
+            break   
+    return render_template("material_page.html", course_id=course_id, material=material, next_material=next_material)
 
 
 @app.route("/delete_material/<int:mat_id>", methods =["POST"])
@@ -297,14 +303,14 @@ def delete_material(mat_id):
                 "error.html", message="Only the teacher of this course can delete the material")
 
 
-@app.route("/change_material/<int:id>", methods=["GET", "POST"])
-def change_material(id):
+@app.route("/change_material/<int:material_id>", methods=["GET", "POST"])
+def change_material(material_id):
     if request.method == "GET":
-        if not id:
+        if not material_id:
             return render_template(
                 "error.html", message="material id not found")
         teacher_id = session.get("user_id", 0)
-        info = materials.get_material_info(id)
+        info = materials.get_material_info(material_id)
         course_id = info[3]
         if not courses.check_course_teacher(teacher_id, course_id):
             return render_template(
@@ -321,7 +327,7 @@ def change_material(id):
         if session["csrf_token"] != request.form["csrf_token"]:
                 return render_template("error.html", error="403")
         if materials.change_material(id, materialname, materialtext):
-            info = materials.get_material_info(id)
+            info = materials.get_material_info(material_id)
             course_id = info[3]
             return redirect(f"/course_material/{course_id}")
         return render_template(
@@ -396,6 +402,12 @@ def do_task(task_id, course_id):
 
     if request.method == "POST":
         task_info = tasks.get_task_info(task_id)
+        max_count = tasks.get_max_id(course_id)
+        next_task = None
+        for i in range(task_id+1, max_count+1):
+            if tasks.get_task_info(i):
+                next_task = i
+                break
         if task_info[3] == "multiple choice":
             task_choices = tasks.get_task_choices(task_id)
             answers = request.form.getlist("answer")
@@ -404,21 +416,23 @@ def do_task(task_id, course_id):
             if answers != []:
                 if tasks.check_answers(answers, choices):
                     tasks.add_result(user_id, task_id, True)
-                    return render_template(
-                    "task_result.html", message= "correct", task_id=task_id, course_id=course_id)
-            tasks.add_result(user_id, task_id, False)
+                    msg = "correct"
+            else: 
+                tasks.add_result(user_id, task_id, False)
+                msg = "incorrect"
             return render_template(
-                "task_result.html", message= "incorrect", task_id=task_id, course_id=course_id)
+                "task_result.html", message=msg, task_id=task_id, course_id=course_id, next_task=next_task)
         else:
             answer = request.form["answer"]
             user_id = session.get("user_id", 0)
             if tasks.check_match(task_id, answer):
                 tasks.add_result(user_id, task_id, True)
-                return render_template(
-                "task_result.html", message= "correct", task_id=task_id, course_id=course_id)
-            tasks.add_result(user_id, task_id, False)
+                msg = "correct"
+            else:
+                tasks.add_result(user_id, task_id, False)
+                msg ="incorrect"
             return render_template(
-                "task_result.html", message= "incorrect", task_id=task_id, course_id=course_id)
+                "task_result.html", message= msg, task_id=task_id, course_id=course_id, next_task=next_task)
         
 
 @app.route("/choose_task/<int:id>", methods=["GET"])

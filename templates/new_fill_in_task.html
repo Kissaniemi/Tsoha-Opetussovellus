@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 {% block title %}New task{% endblock %}
 {% block content %}
+<form action="/course_page/{{ course_id }}" method="post">
+    <input type="submit" value="Back to course page">
+    </form>
+<p>
+    <hr>
 <form action="/add_fill_in/{{ course_id }}" method="post">
 <p>
 <h3>Fill-in-correct-answer task</h3>

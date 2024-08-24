@@ -1,13 +1,26 @@
 <!doctype html>
-<title>Education App- {% block title %}{% endblock %}</title>
-<h1>Education App</h1>
-<a href="/">Main page</a>
-<a href="/login">Login</a>
-<a href="/create_users">Create user profile</a>
-{% if session.user_id %}
-<a href="/courses">Courses</a>
-<a href="/own_courses">Own courses</a>
-<hr>
-{% endif %}
-{% block content %}{% endblock %}
-<hr>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Education App {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+</head>
+<body>
+    <div class="container">
+        <h1>Education App</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/">Main page</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/create_users">Create user profile</a></li>
+            {% if session.user_id %}
+                <li><a href="/courses">Courses</a></li>
+                <li><a href="/own_courses">Own courses</a></li>           
+            {% endif %}       
+        </ul>
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+    <hr>
+</body>

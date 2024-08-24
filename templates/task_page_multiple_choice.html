@@ -2,6 +2,10 @@
 {% block title %}Multiple choice task{% endblock %}
 {% block content %}
 <p></p>
+<form action="/course_tasks/{{ course_id }}" method="get">
+    <input type="submit" value="Back to tasks">
+    </form>
+    <hr>
 <p>
 Question: {{ task_info[1] }} </p>
 <p>

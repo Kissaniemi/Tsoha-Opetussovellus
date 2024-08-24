@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 {% block title %}New course{% endblock %}
 {% block content %}
+<form action="/courses" method="post">
+    <input type="submit" value="Back to courses page">
+    </form>
+    <p></p>
+    <hr>
 <h3>Create new course</h3>
 <p>
 <form action="/create_course" method="post">
@@ -14,7 +19,5 @@ Course description (5-200 characters): <br>
 </form>  
 <hr>
 <p>
-<form action="/course_page/{{ course_id }}" method="post">
-<input type="submit" value="Back to course page">
-</form>
+
 {% endblock %}

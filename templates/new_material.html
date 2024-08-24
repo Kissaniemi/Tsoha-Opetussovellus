@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 {% block title %}New material{% endblock %}
 {% block content %}
+<form action="/course_page/{{ id }}" method="post">
+    <input type="submit" value="Back to course page">
+    </form>
+    <p>
+    <hr>
+<p>
 <h3>Add new material to course</h3>
 <p>
 <form action="/add_material/{{ id }}" method="post">
@@ -12,9 +18,5 @@ Text material (5-500 characters): <br>
 <input type="submit" value="Add material">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-<hr>
-<p>
-<form action="/course_page/{{ id }}" method="post">
-<input type="submit" value="Back to course page">
-</form>
+
 {% endblock %}

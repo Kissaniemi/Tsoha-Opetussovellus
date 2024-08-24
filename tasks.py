@@ -62,7 +62,10 @@ def get_task_info(task_id):
     """
     sql = text("SELECT id, question, course_id, task_type FROM tasks WHERE id=:id")
     result = db.session.execute(sql, {"id": task_id})
-    return result.fetchone()
+    task = result.fetchone()
+    if not task:
+        return False
+    return task
 
 
 def get_task_choices(task_id):
@@ -152,10 +155,18 @@ def delete_task(task_id):
         db.session.commit()
         
         sql = text("DELETE FROM tasks WHERE id=:id")
-        result = db.session.execute(sql, {"id": task_id})
+        db.session.execute(sql, {"id": task_id})
         db.session.commit()
-
 
     except BaseException:
         return False
     return True
+
+
+def get_max_id(course_id):
+    """Returns the highest(/last) task_id of given course
+    """
+    sql = text("SELECT MAX(id) FROM tasks WHERE course_id=:course_id")
+    result = db.session.execute(sql, 
+                                {"course_id": course_id})
+    return result.fetchone()[0]

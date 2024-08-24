@@ -1,12 +1,17 @@
 {% extends "layout.html" %}
 {% block title %}Materials{% endblock %}
 {% block content %}
+<form action="/course_page/{{ course_id }}" method="post">
+    <input type="submit" value="Back to course page">
+    </form>
+    <p></p>
+<hr>
 <h2>Available material:</h2>
 <hr>
 {% for mat in material %}
-<i>Material name:</i> {{ mat[1] }}
+<b>Material name:</b> {{ mat[1] }}
 <p>
-<i>Material:</i>
+<b>Material:</b>
 <a href="/material_page/{{ mat[3] }}/{{ mat[0] }}"> Read material </a>
 <p>
 {% if teacher %}
@@ -21,10 +26,7 @@
 <input type="hidden" name="mat_id" value="{{ mat[0] }}">
 </form>
 {% endif %}
+<p></p>
 <hr>
-<p>
 {% endfor %}
-<form action="/course_page/{{ id }}" method="post">
-<input type="submit" value="Back to course page">
-</form>
 {% endblock %}

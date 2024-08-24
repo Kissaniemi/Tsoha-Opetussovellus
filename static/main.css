@@ -1,0 +1,21 @@
+body {
+    margin: auto;
+    max-width: 45em;
+    font-family: 'Arial' sans-serif;
+    background-color: #F0EEED;
+}
+nav li {
+    display: inline-block;
+    padding: 0 .5em;
+}
+* {
+    color:#332C39;
+}
+
+h1, b {
+    color:#609EA2;
+}  
+
+a {
+    color:#C92C6D;
+}

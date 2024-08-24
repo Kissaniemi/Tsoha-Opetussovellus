@@ -1,11 +1,17 @@
 {% extends "layout.html" %}
 {% block title %}Course page{% endblock %}
 {% block content %}
-
-Material: {{ material[2] }} 
+<form action="/course_material/{{ course_id }}" method="post">
+<input type="submit" value="Back to course material">
+</form>
 <hr>
 <p>
-<form action="/course_page/{{ id }}" method="post">
-<input type="submit" value="Back to course page">
-</form>
+Material: {{ material[2] }} 
+<p>
+    {% if next_material %}
+    <hr>
+    <form action="/material_page/{{ course_id }}/{{ next_material }}" method="get">
+        <input type="submit" value="Next material">
+        </form>
+        {% endif %}
 {% endblock %}

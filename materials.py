@@ -56,8 +56,22 @@ def change_material(material_id, name, material):
     return True
 
 
-def get_material_info(id):
-    sql = text("SELECT id, name, material, course_id FROM materials WHERE id=:id ")
+def get_material_info(material_id):
+    """Returs all info of the material
+    """
+    sql = text("SELECT id, name, material, course_id FROM materials WHERE id=:id")
     result = db.session.execute(sql, 
-                                {"id": id})
-    return result.fetchone()
+                                {"id": material_id})
+    task = result.fetchone()
+    if not task:
+        return False
+    return task
+
+
+def get_max_id(course_id):
+    """Returns the highest(/last) material_id of given course
+    """
+    sql = text("SELECT MAX(id) FROM materials WHERE course_id=:course_id")
+    result = db.session.execute(sql, 
+                                {"course_id": course_id})
+    return result.fetchone()[0]

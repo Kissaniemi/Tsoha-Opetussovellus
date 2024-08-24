@@ -4,10 +4,8 @@
 <h2>Number of available courses: {{count}}</h2>
 <hr>
 {% for course in courses %}
-<i>Course:</i> {{ course[1] }}
-<p>
-<i>Course description:</i> {{ course[2] }}
-<p>
+<p><b>Course:</b> {{ course[1] }}</p>
+<p><b>Course description:</b> {{ course[2] }}</p>
 <form action="/course_page/{{ course[0] }}" method="post">
 <input type="hidden" name="course_id" value="{{ course[0] }}">
 <input type="submit" value="Course page">

@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 {% block title %}Change course{% endblock %}
 {% block content %}
+<form action="/course_page/{{ info.id }}" method="post">
+    <input type="submit" value="Back to course page">
+    <p>
+    </form>
+<hr>
+<p>
 <h3>Change course</h3>
 <p>
 <form action="/change_course/{{ info.id }}" method="post">
@@ -14,9 +20,6 @@ Course description: <br>
 <input type="submit" value="Change course">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-<hr>
-<p>
-<form action="/course_page/{{ info.id }}" method="post">
-<input type="submit" value="Back to course page">
-</form>
+
+
 {% endblock %}

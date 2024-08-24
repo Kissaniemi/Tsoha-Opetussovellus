@@ -2,9 +2,14 @@
 {% block title %}Course page{% endblock %}
 {% block content %}
 <p></p>
+<form action="/courses" method="post">
+<input type="submit" value="Back to courses">
+</form>
+<p>
+<hr>
 This is course <b>{{ info[1] }}</b> mainpage
 <p>
-<i>Course description:</i> {{ info[3] }} 
+<b>Course description:</b> {{ info[3] }} 
 <form action="/join_course" method="post">
 <input type="hidden" name="course_id" value="{{ info[0] }}">
 <input type="submit" value="Join course">
