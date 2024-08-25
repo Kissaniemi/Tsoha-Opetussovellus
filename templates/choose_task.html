@@ -1,16 +1,20 @@
-{% extends "layout.html" %}
-{% block title %}Choose task type{% endblock %}
-{% block content %}
-<form action="/course_page/{{ id }}" method="post">
-    <input type="submit" value="Back to course page">
-    </form>
-<p>
-    <hr>
-Do you want to add a multiple choice task or a fill-in-correct-answer task?
-<p>
-<a href="/add_multiple_choice/{{ info[0] }}">Add multiple choice task </a>
-<p>
-<a href="/add_fill_in/{{ info[0] }}">Add fill-in-correct-answer task</a>
-<p>
-
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Choose task type{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_page/{{ course_id }}" method="post">
+            <input type="submit" value="Back to course page">
+        </form></p>
+        <hr>
+        <div class="smaller_submit_container">
+            <p>Do you want to add a multiple choice task or a fill-in-correct-answer task?</p>
+            <p><a href="/add_multiple_choice/{{ info[0] }}">Add multiple choice task </a></p>
+            <p><a href="/add_fill_in/{{ info[0] }}">Add fill-in-correct-answer task</a></p>
+        </div>
+        {% endblock %}
+    </body>
+</html>

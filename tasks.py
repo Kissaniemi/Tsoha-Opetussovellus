@@ -77,7 +77,8 @@ def get_task_choices(task_id):
 
 
 def check_answers(answers, choices):
-    """ Checks if the answers to the task were correct"""
+    """ Checks if the answers to the task were correct
+    """
     for i in answers:
         if choices[int(i)][1] == False:
             return False
@@ -142,7 +143,8 @@ def check_match(task_id, user_answer):
 
 
 def delete_task(task_id):
-    """Deletes task and related info"""
+    """Deletes task and related info
+    """
     try:
         sql = text("DELETE FROM answers WHERE task_id=:task_id")
         db.session.execute(sql, 

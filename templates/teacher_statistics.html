@@ -1,43 +1,48 @@
-{% extends "layout.html" %}
-{% block title %}Teacher statistics{% endblock %}
-{% block content %}
-<p>
-<form action="/course_page/{{ course_info[0] }}" method="post">
-<input type="submit" value="Back to course page">
-</form>
-<hr>
-<p>
-<h3>Course name:</h3> {{ course_info[1] }}
-<p>
-<hr>
-<h3>List of students:</h3>
-{% for student in student_info %}   
-<p>
-{{student}}
-<p>
-{% endfor %}
-<hr>
-<p>
-<h3>Course tasks:</h3>
-<p>
-{% for task in tasks %}  
-<p>
-{{ task[1] }}
-<p>
-{% endfor %}
-<hr>
-<h3>Student task status:</h3>
-<p>
-(False if failed, True if passed, Not done yet otherwise)
-<p>
-{% for student in student_results %}  
-<p>
-<b>Task:</b> {{ student[1][1] }}
-<p>
-<b>Student:</b> {{ student[0] }}
-<p>
-<b>Task status:</b> {{ student[2][1] }}
-<p>
-<br>
-{% endfor %}
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Teacher statistics{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_page/{{ course_info[0] }}" method="post">
+            <input type="submit" value="Back to course page">
+        </form></p>
+        <hr>
+        <div class="smaller_submit_container">
+            <p><h3>Course name:</h3> {{ course_info[1] }}</p>
+        </div>
+        <hr>
+        <h3>List of students:</h3>
+        {% for student in student_info %}
+            <div class="small_container"> 
+                {{student}}
+            </div>  
+            <p></p>
+        {% endfor %}
+        <hr>
+        <p><h3>Course task questions:</h3></p>
+        {% for task in tasks %}  
+            <div class="small_container">
+                {{ task[1] }}
+            </div>
+            <p></p>
+        {% endfor %}
+            <hr>
+            <h3>Student task status:</h3>
+            <div class="small_container">
+                (False if failed, True if passed, Not done yet otherwise)
+            </div>
+            <br>
+        {% for student in student_results %}  
+            <div class="smaller_submit_container">
+                <p><b>Task:</b> {{ student[1][1] }}</p>
+                <p><b>Student:</b> {{ student[0] }}</p>
+                <p><b>Task status:</b> {{ student[2][1] }}</p>
+            </div>
+            <p></p>
+        {% endfor %}
+        {% endblock %}
+    </body>
+</html>

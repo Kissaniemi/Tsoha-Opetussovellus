@@ -1,16 +1,22 @@
-{% extends "layout.html" %}
-{% block title %}Choose user type{% endblock %}
-{% block content %}
-<h2>Create user profile</h2>
-Do you want to create a new student profile or teacher profile?
-<p>
-<a href="/create_student">Create student profile</a>
-<p>
-<a href="/create_teacher">Create teacher profile</a>
-<hr>
-{% if session.user_id %}
-<p>
-<a href="/logout">Logout</a>
-{% else %}
-{% endif %}
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Choose user type{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <h2>Create user profile</h2>
+        <div class="smaller_submit_container">
+            <p>Do you want to create a new <b>student</b> account or <b>teacher</b> account?</p>
+            <p><a href="/create_student">Create student account</a></p>
+            <p><a href="/create_teacher">Create teacher account</a></p>
+        </div>
+        <hr>
+        {% if session.user_id %}
+            <p><a href="/logout">Logout</a></pp>
+        {% else %}
+        {% endif %}
+        {% endblock %}
+    </body>
+</html>

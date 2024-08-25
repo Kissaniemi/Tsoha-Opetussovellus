@@ -1,25 +1,27 @@
-{% extends "layout.html" %}
-{% block title %}Change course{% endblock %}
-{% block content %}
-<form action="/course_page/{{ info.id }}" method="post">
-    <input type="submit" value="Back to course page">
-    <p>
-    </form>
-<hr>
-<p>
-<h3>Change course</h3>
-<p>
-<form action="/change_course/{{ info.id }}" method="post">
-<input type="hidden" name="course_id" value="{{ info[0] }}">
-<p>
-Course name: <input type="text" name="coursename" value="{{ info.name }}"required minlength="5" maxlength="40">
-<p>
-Course description: <br>
-<textarea type = "text" name="description" required minlength="5" maxlength="200"> {{ info.description }}</textarea>
-<br>
-<input type="submit" value="Change course">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Change course{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_page/{{ info.id }}" method="post">
+            <input type="submit" value="Back to course page">
+        </form></p>
+        <hr>
+        <p><h3>Change course info</h3></p>
+        <div class="submit_container"> 
+            <form action="/change_course/{{ info.id }}" method="post">
+            <input type="hidden" name="course_id" value="{{ info[0] }}">
+            <p>Course name: <input type="text" name="coursename" value="{{ info.name }}"required minlength="5" maxlength="40"></p>
+            <p>Course description:</p>
+            <p><textarea type = "text" name="description" required minlength="5" maxlength="200"> {{ info.description }}</textarea> </p>
+        </div>
+        <p><input type="submit" value="Change course"></p>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+    {% endblock %}
+    </body>
+</html>
 
-
-{% endblock %}

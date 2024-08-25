@@ -1,32 +1,35 @@
-{% extends "layout.html" %}
-{% block title %}Materials{% endblock %}
-{% block content %}
-<form action="/course_page/{{ course_id }}" method="post">
-    <input type="submit" value="Back to course page">
-    </form>
-    <p></p>
-<hr>
-<h2>Available material:</h2>
-<hr>
-{% for mat in material %}
-<b>Material name:</b> {{ mat[1] }}
-<p>
-<b>Material:</b>
-<a href="/material_page/{{ mat[3] }}/{{ mat[0] }}"> Read material </a>
-<p>
-{% if teacher %}
-<form action="/delete_material/{{ mat[0] }}" method="post" onclick="return confirm('Are you sure you want to delete the task?')">
-<input type="submit" value="Delete material">
-<input type="hidden" name="course_id" value="{{ mat[3] }}">
-<input type="hidden" name="mat_id" value="{{ mat[0] }}">
-</form>
-<p>
-<form action="/change_material/{{ mat[0] }}" method="get">
-<input type="submit" value="Change material">
-<input type="hidden" name="mat_id" value="{{ mat[0] }}">
-</form>
-{% endif %}
-<p></p>
-<hr>
-{% endfor %}
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Materials{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_page/{{ course_id }}" method="post">
+            <input type="submit" value="Back to course page">
+        </form></p>
+        <hr>
+        <h2>Available material:</h2>
+        <hr>
+        {% for mat in material %}
+        <div class="smaller_submit_container">
+            <p><b>Material name:</b> {{ mat[1] }}
+            <a href="/material_page/{{ mat[3] }}/{{ mat[0] }}"> Read material </a></p>
+        {% if teacher %}
+            <p><form action="/delete_material/{{ mat[0] }}" method="post" onclick="return confirm('Are you sure you want to delete the task?')">
+                <input type="submit" value="Delete material">
+                <input type="hidden" name="course_id" value="{{ mat[3] }}">
+                <input type="hidden" name="mat_id" value="{{ mat[0] }}">
+            </form></p>
+            <p> <form action="/change_material/{{ mat[0] }}" method="get">
+                <input type="submit" value="Change material">
+                <input type="hidden" name="mat_id" value="{{ mat[0] }}">
+            </form></p>
+        {% endif %}
+        </div>
+        <p></p>
+        {% endfor %}
+        {% endblock %}
+    </body>
+</html>

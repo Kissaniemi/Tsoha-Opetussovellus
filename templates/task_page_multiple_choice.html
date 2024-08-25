@@ -1,22 +1,23 @@
-{% extends "layout.html" %}
-{% block title %}Multiple choice task{% endblock %}
-{% block content %}
-<p></p>
-<form action="/course_tasks/{{ course_id }}" method="get">
-    <input type="submit" value="Back to tasks">
-    </form>
-    <hr>
-<p>
-Question: {{ task_info[1] }} </p>
-<p>
-<form action="/task_page/{{ course_id }}/{{ task_info[0] }}" method="post">
-{% for i in range(0, length) %}
-<p>
-{{ task_choices[i][0] }} <input type="radio" name="answer" value="{{ i }}">
-</p>
-{% endfor %}
-<p>
-<input type="submit" value="Submit answer">
-</form>
-<p></p>
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Multiple choice task{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_tasks/{{ course_id }}" method="get">
+            <input type="submit" value="Back to tasks">
+        </form></p>
+        <hr>
+        <div class="submit_container"> 
+            <b>Question:</b> {{ task_info[1] }}
+            <p><form action="/task_page/{{ course_id }}/{{ task_info[0] }}" method="post"><p>
+            {% for i in range(0, length) %}
+                <p>{{ task_choices[i][0] }} <input type="radio" name="answer" value="{{ i }}"></p>
+            {% endfor %}
+        </div>
+        <p><input type="submit" value="Submit answer"></form></p>
+        {% endblock %}
+    </body>
+</html>

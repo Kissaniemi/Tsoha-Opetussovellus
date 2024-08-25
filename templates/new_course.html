@@ -1,23 +1,28 @@
-{% extends "layout.html" %}
-{% block title %}New course{% endblock %}
-{% block content %}
-<form action="/courses" method="post">
-    <input type="submit" value="Back to courses page">
-    </form>
-    <p></p>
-    <hr>
-<h3>Create new course</h3>
-<p>
-<form action="/create_course" method="post">
-Course name (5-40 characters): <input type="text" name="coursename" required minlength="5" maxlength="40">
-<p>
-Course description (5-200 characters): <br>
-<textarea name="description" required minlength="5" maxlength="200"></textarea>
-<br>
-<input type="submit" value="Create new course">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>  
-<hr>
-<p>
-
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}New course{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/courses" method="post">
+        <input type="submit" value="Back to courses page">
+        </form></p>
+            <hr>
+            <p><h3>Create new course</h3></p>
+            <div class="submit_container">
+                <p><form action="/create_course" method="post"></p>
+                <p>Course name (5-40 characters): <input type="text" name="coursename" required minlength="5" maxlength="40"></p>
+                <p>Course description (5-200 characters):</p>
+                <p><textarea name="description" required minlength="5" maxlength="200"></textarea></p>
+            </div>
+            <p><input type="submit" value="Create new course"></p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>  
+        <hr>
+        <p></p>
+        {% endblock %}
+    </body>
+</html>
+    

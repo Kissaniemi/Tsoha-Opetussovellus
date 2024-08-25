@@ -1,25 +1,31 @@
-{% extends "layout.html" %}
-{% block title %}Tasks{% endblock %}
-{% block content %}
-<form action="/course_page/{{ course_id }}" method="post">
-    <input type="submit" value="Back to course page">
-    </form>
-    <p></p>
-    <hr>
-<h2>Available tasks:</h2>
-<hr>
-{% for i in range (0, length) %}
-<p><i>Question:</i> {{ task_info[i][1] }}</p>
-<p>
-<form action="/task_page/{{ course_id }}/{{ task_info[i][0] }}" method="get">
-<input type="submit" value="Try task">
-</form>
-<p>
-{% if teacher %}  
-<form action="/delete_task/{{ task_info[i][0] }}" method="post" onclick="return confirm('Are you sure you want to delete the task?')">
-<input type="submit" value="Delete task">
-</form>
-<hr>
-{% endif %}    
-{% endfor %}
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Tasks{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_page/{{ course_id }}" method="post">
+            <input type="submit" value="Back to course page">
+        </form></p>
+        <hr>
+        <h2>Available tasks:</h2>
+        <hr>
+        {% for i in range (0, length) %}
+        <div class="smaller_submit_container">
+            <p><b>Question:</b> {{ task_info[i][1] }}</p>
+            <p><form action="/task_page/{{ course_id }}/{{ task_info[i][0] }}" method="get">
+            <input type="submit" value="Try task">
+            </form></p>
+        {% if teacher %}  
+            <p><form action="/delete_task/{{ task_info[i][0] }}" method="post" onclick="return confirm('Are you sure you want to delete the task?')">
+            <input type="submit" value="Delete task">
+            </form><p>
+        {% endif %}  
+        </div>  
+        <p></p>
+        {% endfor %}
+        {% endblock %}
+    </body>
+</html>

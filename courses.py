@@ -4,13 +4,13 @@ from sqlalchemy.sql import text
 from db import db
 import tasks
 
-
 def get_list():
     """Returns all courses (if available)
     """
     sql = text("SELECT id, name, description FROM courses")
     result = db.session.execute(sql)
     return result.fetchall()
+
 
 def create_new(name, description, user_id):
     """Create a new course
@@ -32,6 +32,7 @@ def create_new(name, description, user_id):
     except BaseException:
         return False
     return True
+
 
 def join_course(course_id, user_id):
     """Join course
@@ -106,12 +107,13 @@ def delete_course(course_id):
         return False
     return True
 
-def get_course_info(id):
+
+def get_course_info(course_id):
     """Returns course id, name, teacher_id and description
     """
     sql = text("SELECT id, name, teacher_id, description FROM courses WHERE id=:id ")
     result = db.session.execute(sql, 
-                                {"id": id})
+                                {"id": course_id})
     return result.fetchone()
 
 

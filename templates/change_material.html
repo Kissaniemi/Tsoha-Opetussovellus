@@ -1,16 +1,23 @@
-{% extends "layout.html" %}
-{% block title %}Change material{% endblock %}
-{% block content %}
-<h3>Change material</h3>
-<p>
-<form action="/change_material/{{ info.id }}" method="post">
-Material name (5-30 characters): <input type="text" value="{{ info.name }}" name="materialname" required minlength="5" maxlength="30">
-<p>
-Text material (5-500 characters): <br>
-<textarea name="materialtext" required minlength="5" maxlength="500" >{{ info.material }}</textarea>
-<br>
-<input type="hidden" name="course_id" value="{{ info.course_id }}">
-<input type="submit" value="Update material">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Change material{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><h3>Change material</h3></p>
+        <div class="submit_container">
+            <p><form action="/change_material/{{ info.id }}" method="post"></p>
+                <p>Material name (5-30 characters): <input type="text" value="{{ info.name }}" name="materialname" required minlength="5" maxlength="30"></p>
+                <p>Text material (5-500 characters):</p>
+                <p><textarea name="materialtext" required minlength="5" maxlength="500" >{{ info.material }}</textarea></p>
+                <br>
+                <input type="hidden" name="course_id" value="{{ info.course_id }}">
+                <input type="submit" value="Update material">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </form>
+        </div>
+        {% endblock %}
+    </body>
+</html>    

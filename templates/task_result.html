@@ -1,22 +1,26 @@
-{% extends "layout.html" %}
-{% block title %}Result page{% endblock %}
-{% block content %}
-<p></p>
-<form action="/course_tasks/{{ course_id }}" method="get">
-    <input type="submit" value="Back to tasks">
-    </form>
-    <p>
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Result page{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_tasks/{{ course_id }}" method="get">
+            <input type="submit" value="Back to tasks">
+        </form></p>
         <hr>
-Result for the quiz: {{ message }}
-<p>
-<form action="/task_page/{{ course_id }}/{{ task_id }}" method="get">
-<input type="submit" value="Try again">
-</form>
-<p>
-    {% if next_task %}
-    <form action="/task_page/{{ course_id }}/{{ next_task }}" method="get">
-    <input type="submit" value="Next Task">
-    </form>
-    <p>
-       {% endif %} 
-{% endblock %}
+        <div class="smaller_submit_container">
+            <p>Result for the quiz: {{ message }}</p>
+            <p><form action="/task_page/{{ course_id }}/{{ task_id }}" method="get">
+                <input type="submit" value="Try again">
+            </form></p>
+            {% if next_task %}
+                <p><form action="/task_page/{{ course_id }}/{{ next_task }}" method="get">
+                    <input type="submit" value="Next Task">
+                </form></p>
+            {% endif %} 
+        </div>
+        {% endblock %}
+    </body>
+</html>

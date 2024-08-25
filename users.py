@@ -1,4 +1,4 @@
-"""Login related functions
+"""User related functions
     """
 from sqlalchemy.sql import text
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -9,13 +9,6 @@ import secrets
 
 def login(username, password):
     """Login function
-
-    Args:
-        username: profile username
-        password: profile password
-
-    Returns:
-        Boolean: True if username and password ok, False if not
     """
     sql = text("SELECT id, password FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username": username})
@@ -38,14 +31,6 @@ def logout():
 
 def register(username, password, user_type):
     """Register new user profile
-
-    Args:
-        username: profile username
-        password: profile password
-        type_user (Boolean): check to see if user has teacher rights
-
-    Returns:
-        : returns False if registering failed, True if not
     """
     hash_value = generate_password_hash(password)
     try:
@@ -69,23 +54,19 @@ def register(username, password, user_type):
     return True
 
 
-def get_user_type():
+def get_user_type(user_id):
     """Returns user type (teacher or not)
-
-    Returns:
-        Boolean: False if user type is not teacher, True if is
     """
-    id_user = session.get("user_id", 0)
     sql = text("SELECT teacher FROM users WHERE id=:id")
-    result = db.session.execute(sql, {"id": id_user})
+    result = db.session.execute(sql, {"id": user_id})
     return result.fetchone()
 
 
-def get_user_name(id_user):
+def get_user_name(user_id):
     """Returns username
     """
     sql = text("SELECT username FROM users WHERE id=:id")
-    result = db.session.execute(sql, {"id": id_user})
+    result = db.session.execute(sql, {"id": user_id})
     result_one = result.fetchone()
     if result_one is None:
         return False

@@ -1,19 +1,23 @@
-{% extends "layout.html" %}
-{% block title %}{% endblock %}
-{% block content %}
-<h2>Mainpage</h2>
-<p>Welcome to the site!</p>
-{% if session.user_id %}
-<p>
-You are logged in as <b>{{ name }}</b>.
-<p>
-<hr>
-<p>
-<a href="/logout">Logout</a>
-{% else %}
-<p>
-You are not logged in</b>.
-<p>
-<a href="/login">Login</a> 
-{% endif %}
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block content %}
+    </head>
+    <body>
+        <h2>Main page</h2>
+        <div class="smaller_submit_container">
+            <p>Welcome to the site!</p>
+            {% if session.user_id %}
+                <p>You are logged in as <b>{{ name }}.</b></p>
+            </div>
+                <hr>
+                <p><a href="/logout">Logout</a></p>
+            {% else %}
+                <p>You are not logged in</b></p>
+                <p><a href="/login">Login</a> </p>
+            {% endif %}
+        
+        {% endblock %}
+    </body>
+</html>

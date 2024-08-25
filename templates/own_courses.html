@@ -1,31 +1,35 @@
-{% extends "layout.html" %}
-{% block title %}Tasks{% endblock %}
-{% block content %}
-<h2>Own courses:</h2>
-<hr>
-{% if course_info %}
-{% for info in course_info %}
-<i>Course name:</i> {{ info[1] }}
-<p>
-Course description {{ info[3] }}
-<p>
-<form action="/course_page/{{ info[0]}}" method="get">
-<input type="hidden" name="course_id" value="{{ info[0] }}">
-<input type="submit" value="Go to course page">
-</form>
-<p>
-<form action="/course_statistics/{{ info[0] }}" method="get">
-<input type="submit" value="See course tasks statistics ">
-</form>
-<hr>
-<p>
-{% endfor %}
-{% else %}
-You haven't joined any courses yet.
-{% endif %}
-{% if session.user_id %}
-<p>
-<a href="/logout">Logout</a>
-{% else %}
-{% endif %}
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Tasks{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <h2>Own courses:</h2>
+        <hr>
+        {% if course_info %}
+            {% for info in course_info %}
+                <div class="submit_container">
+                    <p><b>Course name:</b> {{ info[1] }}</p>
+                    <p><b>Course description:</b> {{ info[3] }}</p>
+                    <p><form action="/course_page/{{ info[0]}}" method="get">
+                        <input type="hidden" name="course_id" value="{{ info[0] }}">
+                        <input type="submit" value="To course page">
+                    </form></p>
+                    <p><form action="/course_statistics/{{ info[0] }}" method="get">
+                        <input type="submit" value="Course statistics ">
+                    </form></p>
+                </div>
+                <hr>
+            {% endfor %}
+            {% else %}
+            <p>You haven't joined any courses yet.</p>
+        {% endif %}
+        {% if session.user_id %}
+            <p><a href="/logout">Logout</a></p>
+        {% else %}
+        {% endif %}
+        {% endblock %}
+    </body>
+</html>  

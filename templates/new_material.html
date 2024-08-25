@@ -1,22 +1,25 @@
-{% extends "layout.html" %}
-{% block title %}New material{% endblock %}
-{% block content %}
-<form action="/course_page/{{ id }}" method="post">
-    <input type="submit" value="Back to course page">
-    </form>
-    <p>
-    <hr>
-<p>
-<h3>Add new material to course</h3>
-<p>
-<form action="/add_material/{{ id }}" method="post">
-Material name (5-30 characters): <input type="text" name="materialname" required minlength="5" maxlength="30">
-<p>
-Text material (5-500 characters): <br>
-<textarea name="materialtext" required minlength="5" maxlength="500" ></textarea>
-<br>
-<input type="submit" value="Add material">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}New material{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_page/{{ id }}" method="post">
+            <input type="submit" value="Back to course page">
+        </form></p>
+        <hr>
+        <p><h3>Add new material to course</h3></p>
+        <p><form action="/add_material/{{ id }}" method="post"></p>
+            <div class="submit_container">
+                <p>Material name (5-30 characters): <input type="text" name="materialname" required minlength="5" maxlength="30"></p>
+                <p>Text material (5-500 characters):</p>
+                <p><textarea name="materialtext" required minlength="5" maxlength="500" ></textarea></p>
+            </div>
+            <p><input type="submit" value="Add material"></p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </form>    
+        {% endblock %}
+    </body>
+</html>

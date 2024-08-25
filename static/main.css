@@ -1,21 +1,126 @@
-body {
-    margin: auto;
-    max-width: 45em;
-    font-family: 'Arial' sans-serif;
-    background-color: #F0EEED;
+html {
+    height: 100%;
 }
+
+body {
+    height: 100%;
+    margin: auto;
+    max-width: 720px;
+    font-family: 'Tahoma', "Arial", sans-serif;
+    font-size: 20px;
+    background-color: #ffffff;
+    line-height: 1.5;
+    padding: 20px;
+}
+
 nav li {
     display: inline-block;
-    padding: 0 .5em;
+    padding: 8.5px;
+    background: #ebe3e5;
+    border-radius: 10px;
+    margin: 3px;
 }
+
+nav li a {
+    text-decoration: none;
+}
+
+nav li:hover {
+    background-color:#ebd2da ;
+}
+
+input[type="submit"]:hover {
+    background-color: #ebd2da;
+}
+
+
 * {
     color:#332C39;
 }
 
-h1, b {
-    color:#609EA2;
+h1 {
+    color:#332C39;
+    margin-top: 10px;
+    padding: 18px
+}  
+
+b {
+    color:#36878d;
 }  
 
 a {
     color:#C92C6D;
 }
+
+textarea {
+    width: 590px;
+    height: 120px;
+    max-height: 120px; 
+    max-width: 590px; 
+    font-size: 18px;
+
+}
+
+input[type="submit"] {
+    background-color:#ebe3e5;
+    width: 180px;
+    height: 40px; 
+    border-radius: 10px;
+    font-size: 18px;
+} 
+
+input[type="text"], input[type="password"] {
+    background-color:#fdfdfd;
+    width: 250px;
+    height: 30px; 
+    border-radius: 10px;
+    font-size: 18px;
+
+} 
+
+.container {
+    margin: auto;
+    width: 720px;
+    height: 100px;
+    border-radius: 15px;
+    background-color:  #b1dbee;
+  }
+
+.small_container {    
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 620px;
+    height: 50px;
+    background-color: #b1dbee;
+
+}
+
+.submit_container {
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 620px;
+    height: 270px;
+    background-color: #b1dbee;
+}
+
+.smaller_submit_container {
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 620px;
+    height: 180px;
+    background-color: #b1dbee;
+}
+
+.longer_submit_container {
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 620px;
+    height: 580px;
+    background-color: #b1dbee;
+}
+
+

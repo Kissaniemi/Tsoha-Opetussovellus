@@ -1,25 +1,31 @@
-{% extends "layout.html" %}
-{% block title %}Student statistics{% endblock %}
-{% block content %}
-<form action="/course_page/{{ course_info[0] }}" method="post">
-<input type="submit" value="Back to course page">
-</form>
-<hr>
-<p>
-<h3>Course name:</h3> {{ course_info[1] }}
-<p>
-<h3>Course teacher:</h3> {{ teacher }}
-<p>
-<hr>
-<h3>Course task status:</h3> 
-(False if failed, True if passed, Not done yet otherwise)
-<p>
-{% for i in range(0, length) %}
-<p>
-<b>Task:</b> {{ course_tasks[i][1] }}
-<p>
-<b>Task done status:</b> {{ answers[i][1] }}
-<p>
-<br>
-{% endfor %}
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Student statistics{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_page/{{ course_info[0] }}" method="post">
+            <input type="submit" value="Back to course page">
+        </form></p>
+        <hr>
+        <h2>Course Statistics</h2>   
+        <div class="submit_container">
+            <h3>Course name:</h3> <b>{{ course_info[1] }}</b>
+            <p><h3>Course teacher:</h3><b>{{ teacher }}</b></p>
+        </div>
+        <hr>
+        <p><h3>Course task status:</h3></p>
+        <p>(False if failed, True if passed, Not done yet otherwise)</p>
+        <br>
+        {% for i in range(0, length) %}
+        <div class="smaller_submit_container">
+            <p><b>Task:</b> {{ course_tasks[i][1] }}</p>
+            <p><b>Task done status:</b> {{ answers[i][1] }}</p>
+        </div>
+        <p></p>
+        {% endfor %}
+        {% endblock %}
+    </body>
+</html>

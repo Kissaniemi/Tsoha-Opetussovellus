@@ -1,34 +1,42 @@
-{% extends "layout.html" %}
-{% block title %}New multiple chocie task{% endblock %}
-{% block content %}
-<form action="/course_page/{{ course_id }}" method="post">
-    <input type="submit" value="Back to course page">
-    </form>
-<p>
-    <hr>
-<form action="/add_multiple_choice/{{ course_id }}" method="post">
-<p>
-<h3>Multiple choice task</h3>
-<p>
-Write the task question in the question field. 
-<p>
-Write the choices in the fields under that (blank fields will be ignored).
-<p>
-Mark correct answer with the checkbox next to the choice (You can only choose one).
-<p>Question (5-100 characters):<br>
-<input type="text" name="question" required minlength="5" maxlength="100"></p>
-<p>Choice 1:<br>
-<input type="text" name="choice">
-<input type="radio" name="answer" value="0" checked></p>
-<p>Choice 2:<br>
-<input type="text" name="choice">
-<input type="radio" name="answer" value="1"></p>
-<p>Choice 3:<br>
-<input type="text" name="choice">
-<input type="radio" name="answer" value="2"></p>
-<p>Choice 4:<br>
-<input type="text" name="choice">
-<input type="radio" name="answer" value="3"></p>
-<input type="submit" value="Add task">
-</form>
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}New multiple chocie task{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_page/{{ course_id }}" method="post">
+            <input type="submit" value="Back to course page">
+        </form></p>
+        <hr>
+        <p><form action="/add_multiple_choice/{{ course_id }}" method="post"></p>
+        <p><h3>Multiple choice task</h3></p>
+        <div class="smaller_submit_container">
+            <p>Write the task question in the question field. </p>
+            <p>Write the choices in the fields under that (blank fields will be ignored).</p>
+            <p>Mark correct answer with the checkbox next to the choice (You can only choose one).</p>
+        </div>
+        <p></p>
+        <div class="longer_submit_container">
+            <p>Question (5-100 characters):</p>
+            <p><input type="text" name="question" required minlength="5" maxlength="100"></p>
+            <p>Choice 1:</p>
+                <p><input type="text" name="choice">
+                <input type="radio" name="answer" value="0" checked></p>
+            <p>Choice 2:</p>
+                <p><input type="text" name="choice">
+                <input type="radio" name="answer" value="1"></p>
+            <p>Choice 3:</p>
+                <p><input type="text" name="choice">
+                <input type="radio" name="answer" value="2"></p>
+            <p>Choice 4:</p>
+                <p><input type="text" name="choice">
+                <input type="radio" name="answer" value="3"></p>
+            <p><input type="submit" value="Add task"></p>
+        </div>
+        </form>
+        <p></p>
+        {% endblock %}
+    </body>
+</html>

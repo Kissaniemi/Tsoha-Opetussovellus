@@ -1,17 +1,22 @@
-{% extends "layout.html" %}
-{% block title %}Course page{% endblock %}
-{% block content %}
-<form action="/course_material/{{ course_id }}" method="post">
-<input type="submit" value="Back to course material">
-</form>
-<hr>
-<p>
-Material: {{ material[2] }} 
-<p>
-    {% if next_material %}
-    <hr>
-    <form action="/material_page/{{ course_id }}/{{ next_material }}" method="get">
-        <input type="submit" value="Next material">
-        </form>
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Course page{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <p><form action="/course_material/{{ course_id }}" method="post">
+            <input type="submit" value="Back to materials">
+        </form></p>
+        <hr>
+        <p>Material: {{ material[2] }} </p>
+        {% if next_material %}
+            <hr>
+            <p><form action="/material_page/{{ course_id }}/{{ next_material }}" method="get">
+                <input type="submit" value="Next material">
+            </form><p>
         {% endif %}
-{% endblock %}
+        {% endblock %}
+    </body>
+</html>

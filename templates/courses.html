@@ -1,24 +1,32 @@
-{% extends "layout.html" %}
-{% block title %}Courses{% endblock %}
-{% block content %}
-<h2>Number of available courses: {{count}}</h2>
-<hr>
-{% for course in courses %}
-<p><b>Course:</b> {{ course[1] }}</p>
-<p><b>Course description:</b> {{ course[2] }}</p>
-<form action="/course_page/{{ course[0] }}" method="post">
-<input type="hidden" name="course_id" value="{{ course[0] }}">
-<input type="submit" value="Course page">
-</form>
-<p>
-<hr>
-{% endfor %}
-{% if teacher %}  
-<a href="/create_course">Create a new course</a>
-{% endif %}
-{% if session.user_id %}
-<p>
-<a href="/logout">Logout</a>
-{% else %}
-{% endif %}
-{% endblock %}
+<!doctype html>
+<html>
+    <head>
+        {% extends "layout.html" %}
+        {% block title %}Courses{% endblock %}
+        {% block content %}
+    </head>
+    <body>
+        <h2>Courses</h2>
+        <p><b>Number of available courses: {{count}}</b></p>
+        <hr>
+        {% for course in courses %}
+        <div class="smaller_submit_container">
+            <p><b>Course:</b> {{ course[1] }}</p>
+            <p><b>Course description:</b> {{ course[2] }}</p>
+            <p><form action="/course_page/{{ course[0] }}" method="post">
+                <input type="hidden" name="course_id" value="{{ course[0] }}">
+                <input type="submit" value="Course page">
+            </form></p>
+        </div>
+        <hr>
+        {% endfor %}
+        {% if teacher %}  
+            <p><a href="/create_course">Create a new course</a></p>
+        {% endif %}
+        {% if session.user_id %}
+            <p><a href="/logout">Logout</a></p>
+        {% else %}
+        {% endif %}
+        {% endblock %}
+    </body>
+</html>
