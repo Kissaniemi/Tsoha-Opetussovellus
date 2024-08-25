@@ -6,6 +6,20 @@
         {% block content %}
     </head>
     <body>
+        {% if error %}
+            <div style="color: red">{{ error }}</div>
+            <p><form action="/courses" method="post">
+                <input type="submit" value="Back to courses">
+            </form></p>
+        {% endif %}
+        {% if not error %}
+            <p><form action="/course_page/{{ course_id }}" method="post">
+                <input type="submit" value="Back to course page">
+            </form></p>
+            <hr>
+            {% if message %}
+                 <div style="color: red">{{ message }}</div>
+            {% endif %}
         <h2>Courses</h2>
         <p><b>Number of available courses: {{count}}</b></p>
         <hr>
@@ -26,6 +40,7 @@
         {% if session.user_id %}
             <p><a href="/logout">Logout</a></p>
         {% else %}
+        {% endif %}
         {% endif %}
         {% endblock %}
     </body>

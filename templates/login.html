@@ -4,11 +4,30 @@
         {% extends "layout.html" %}
         {% block title %}Login{% endblock %}
         {% block content %}
+        <script>
+            function check(form) {
+                var errors = [];
+                if (form.username.value.length < 4) {
+                    errors.push("Username too short (minimum 4 characters)");
+                }
+                if (form.password.value.length < 4) {
+                    errors.push("Password too short (minimum 4 characters)");
+                }
+                if (errors.length > 0){
+                    alert(errors.join("\n"));
+                    return false;
+                }
+                return true;
+            }
+        </script>
     </head>
     <body>
         <h2>Login</h2>   
+        {% if message %}
+            <div style="color: red">{{ message }}</div>
+        {% endif %}
         <div class="submit_container">
-            <form action="/login" method="post">
+            <form action="/login" method="post" onsubmit="return check(this)">
                 <p>Username: <input type="text" name="username"></p>
                 <p>Password: <input type="password" name="password"></p>
                 <input type="submit" value="Login">

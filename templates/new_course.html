@@ -4,24 +4,56 @@
         {% extends "layout.html" %}
         {% block title %}New course{% endblock %}
         {% block content %}
+        <script>
+            function check(form) {
+                var errors = [];
+                if (form.coursename.value.length > 100) {
+                    errors.push("Course name too long (maximum 100 characters)");
+                }
+                if (form.description.value.length > 1000) {
+                    errors.push("Course description too long (maximum 1000 characters)");
+                }
+                if (form.coursename.value.length < 5) {
+                    errors.push("Course name too short (minimum 5 characters)");
+                }
+                if (form.description.value.length < 5) {
+                    errors.push("Course description too short (minimum 5 characters)");
+                }
+                if (errors.length > 0) {
+                    alert(errors.join("\n"));
+                    return false;
+                }
+                return true;
+            }
+        </script>
     </head>
     <body>
         <p><form action="/courses" method="post">
-        <input type="submit" value="Back to courses page">
+            <input type="submit" value="Back to courses">
         </form></p>
+        {% if error %}
+            <div style="color: red">{{ error }}</div>
+        {% endif %}
+        {% if not error %}
             <hr>
             <p><h3>Create new course</h3></p>
+            {% if message %}
+                {% for error in message %}
+                    <div style="color: red">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
             <div class="submit_container">
-                <p><form action="/create_course" method="post"></p>
-                <p>Course name (5-40 characters): <input type="text" name="coursename" required minlength="5" maxlength="40"></p>
+                <p><form action="/create_course" method="post" onsubmit="return check(this)"></p>
+                <p>Course name (5-40 characters): <input type="text" name="coursename"></p>
                 <p>Course description (5-200 characters):</p>
-                <p><textarea name="description" required minlength="5" maxlength="200"></textarea></p>
+                <p><textarea name="description"></textarea></p>
             </div>
             <p><input type="submit" value="Create new course"></p>
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>  
         <hr>
         <p></p>
+        {% endif %}
         {% endblock %}
     </body>
 </html>

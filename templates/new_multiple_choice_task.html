@@ -4,13 +4,29 @@
         {% extends "layout.html" %}
         {% block title %}New multiple chocie task{% endblock %}
         {% block content %}
+        <script>
+            function check(form) {
+                var errors = [];
+                if (form.question.value.length > 100) {
+                    errors.push("Question too long (maximum 100 characters)");
+                }
+                if (form.question.value.length < 5) {
+                    errors.push("Question too short (minimum 5 characters)");
+                }
+                if (errors.length > 0) {
+                    alert(errors.join("\n"));
+                    return false;
+                }
+                return true;
+            }
+        </script>
     </head>
     <body>
         <p><form action="/course_page/{{ course_id }}" method="post">
             <input type="submit" value="Back to course page">
         </form></p>
         <hr>
-        <p><form action="/add_multiple_choice/{{ course_id }}" method="post"></p>
+        <p><form action="/add_multiple_choice/{{ course_id }}" method="post" onsubmit="return check(this)"></p>
         <p><h3>Multiple choice task</h3></p>
         <div class="smaller_submit_container">
             <p>Write the task question in the question field. </p>
@@ -20,7 +36,7 @@
         <p></p>
         <div class="longer_submit_container">
             <p>Question (5-100 characters):</p>
-            <p><input type="text" name="question" required minlength="5" maxlength="100"></p>
+            <p><input type="text" name="question"></p>
             <p>Choice 1:</p>
                 <p><input type="text" name="choice">
                 <input type="radio" name="answer" value="0" checked></p>

@@ -7,6 +7,7 @@
     </head>
     <body>
         <p><form action="/course_page/{{ course_id }}" method="post">
+            
             <input type="submit" value="Back to course page">
         </form></p>
         <hr>
@@ -19,7 +20,7 @@
             <input type="submit" value="Try task">
             </form></p>
         {% if teacher %}  
-            <p><form action="/delete_task/{{ task_info[i][0] }}" method="post" onclick="return confirm('Are you sure you want to delete the task?')">
+            <p><form action="/delete_task/{{ task_info[i][0] }}" method="post" onclick="return confirm('Are you sure you want to delete this task?')">
             <input type="submit" value="Delete task">
             </form><p>
         {% endif %}  

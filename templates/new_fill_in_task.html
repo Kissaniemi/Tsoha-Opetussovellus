@@ -4,13 +4,40 @@
         {% extends "layout.html" %}
         {% block title %}New task{% endblock %}
         {% block content %}
+        <script>
+            function check(form) {
+                var errors = [];
+                if (form.question.value.length > 100) {
+                    errors.push("Question too long (maximum 100 characters)");
+                }
+                if (form.answer.value.length > 30) {
+                    errors.push("Answer too long (maximum 300 characters)");
+                }
+                if (form.question.value.length < 5) {
+                    errors.push("Question too short (minimum 5 characters)");
+                }
+                if (form.answer.value.length < 2) {
+                    errors.push("Answer too short (minimum 2 characters)");
+                }
+                if (errors.length > 0) {
+                    alert(errors.join("\n"));
+                    return false;
+                }
+                return true;
+            }
+        </script>
     </head>
     <body>
+        {% if message %}
+            {% for error in message %}
+                <div style="color: red">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
         <p><form action="/course_page/{{ course_id }}" method="post">
             <input type="submit" value="Back to course page">
         </form></p>
         <hr>
-        <p><form action="/add_fill_in/{{ course_id }}" method="post"></p>
+        <p><form action="/add_fill_in/{{ course_id }}" method="post" onsubmit="return check(this)"></p>
             <p><h3>Fill-in-correct-answer task</h3></p>
             <div class="smaller_submit_container">
                 <p>Write the task question in the question field.</p>
@@ -20,9 +47,9 @@
             <p></p>
              <div class="submit_container">
                 <p>Question (5-100 characters):</p>
-                <p><input type="text" name="question" required minlength="5" maxlength="100"></p>
+                <p><input type="text" name="question"></p>
                 <p>Answer (5-30 characters):</p>
-                <p><input type="text" name="answer" required minlength="5" maxlength="30"></p>
+                <p><input type="text" name="answer"></p>
                 <p><input type="submit" value="Add task"></p>
             </div>
             </form>

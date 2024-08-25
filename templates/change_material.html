@@ -4,14 +4,36 @@
         {% extends "layout.html" %}
         {% block title %}Change material{% endblock %}
         {% block content %}
+        <script>
+            function check(form) {
+                var errors = [];
+                if (form.materialname.value.length > 30) {
+                    errors.push("Material name too long (maximum 30 characters)");
+                }
+                if (form.materialtext.value.length > 500) {
+                    errors.push("Material text too long (maximum 500 characters)");
+                }
+                if (form.materialname.value.length < 5) {
+                    errors.push("Material name too short (minimum 5 characters)");
+                }
+                if (form.materialtext.value.length < 5) {
+                    errors.push("Material text too short (minimum 5 characters)");
+                }
+                if (errors.length > 0) {
+                    alert(errors.join("\n"));
+                    return false;
+                }
+                return true;
+            }
+        </script>
     </head>
     <body>
         <p><h3>Change material</h3></p>
         <div class="submit_container">
-            <p><form action="/change_material/{{ info.id }}" method="post"></p>
-                <p>Material name (5-30 characters): <input type="text" value="{{ info.name }}" name="materialname" required minlength="5" maxlength="30"></p>
+            <p><form action="/change_material/{{ info.id }}" method="post" onsubmit="return check(this)"></p>
+                <p>Material name (5-30 characters): <input type="text" value="{{ info.name }}" name="materialname"></p>
                 <p>Text material (5-500 characters):</p>
-                <p><textarea name="materialtext" required minlength="5" maxlength="500" >{{ info.material }}</textarea></p>
+                <p><textarea name="materialtext">{{ info.material }}</textarea></p>
                 <br>
                 <input type="hidden" name="course_id" value="{{ info.course_id }}">
                 <input type="submit" value="Update material">

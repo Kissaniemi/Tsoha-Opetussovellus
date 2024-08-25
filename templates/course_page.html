@@ -6,44 +6,52 @@
         {% block content %}
     </head>
     <body>
-        <p><form action="/courses" method="post">
-            <input type="submit" value="Back to courses">
-        </form></p>
-        <hr>
-        <p>This is course <b>{{ info[1] }}</b> mainpage</p>
-        <p><b>Course description:</b> {{ info[3] }}</p>
-        <div class="submit_container">
-            <p><form action="/join_course" method="post">
-                <input type="hidden" name="course_id" value="{{ info[0] }}">
-                <input type="submit" value="Join course">
+        {% if error %}
+            <div style="color: red">{{ error}}</div>
+        {% endif %}
+        {% if not error %}
+            <p><form action="/courses" method="post">
+                <input type="submit" value="Back to courses">
             </form></p>
-            <p><form action="/course_material/{{ info[0] }}" method="get">
-                <input type="submit" value="Course material">
-            </form></p>
-            <p><form action="/course_tasks/{{ info[0] }}" method="get">
-                <input type="submit" value="Course tasks">
-            </form></p>
-            <p><form action="/course_statistics/{{ info[0] }}" method="get">
-                <input type="submit" value="Course statistics">
-        </div>
-        </form></p>
-        {% if teacher %}    
+            {% if message %}
+                <div style="color: red">{{ message }}</div>
+            {% endif %}
             <hr>
+            <p>This is course <b>{{ info[1] }}</b> mainpage</p>
+            <p><b>Course description:</b> {{ info[3] }}</p>
             <div class="submit_container">
-                <p><form action="/change_course/{{ info[0] }}" method="get">
-                    <input type="submit" value="Change course info">
-                </form></p>
-                <p><form action="/delete_course" method="post" onclick="return confirm('Are you sure you want to delete the course and all related material and tasks?')">
+                <p><form action="/join_course" method="post">
                     <input type="hidden" name="course_id" value="{{ info[0] }}">
-                    <input type="submit" value="Delete course">
+                    <input type="submit" value="Join course">
                 </form></p>
-                <p><form action="/add_material/{{ info[0] }}" method="get">
-                    <input type="submit" value="Add material">
+                <p><form action="/course_material/{{ info[0] }}" method="get">
+                    <input type="submit" value="Course material">
                 </form></p>
-                <p><form action="/choose_task/{{ info[0] }}" method="get">
-                    <input type="submit" value="Add tasks">
+                <p><form action="/course_tasks/{{ info[0] }}" method="get">
+                    <input type="submit" value="Course tasks">
                 </form></p>
+                <p><form action="/course_statistics/{{ info[0] }}" method="get">
+                    <input type="submit" value="Course statistics">
             </div>
+            </form></p>
+            {% if teacher %}    
+                <hr>
+                <div class="submit_container">
+                    <p><form action="/change_course/{{ info[0] }}" method="get">
+                        <input type="submit" value="Change course info">
+                    </form></p>
+                    <p><form action="/delete_course" method="post" onclick="return confirm('Are you sure you want to delete the course and all related material and tasks?')">
+                        <input type="hidden" name="course_id" value="{{ info[0] }}">
+                        <input type="submit" value="Delete course">
+                    </form></p>
+                    <p><form action="/add_material/{{ info[0] }}" method="get">
+                        <input type="submit" value="Add material">
+                    </form></p>
+                    <p><form action="/choose_task/{{ info[0] }}" method="get">
+                        <input type="submit" value="Add tasks">
+                    </form></p>
+                </div>
+            {% endif %}
         {% endif %}
         {% endblock %}
     </body>

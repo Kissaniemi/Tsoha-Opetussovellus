@@ -4,14 +4,44 @@
         {% extends "layout.html" %}
         {% block title %}Register student{% endblock %}
         {% block content %}
+        <script>
+            function check(form) {
+                var errors = [];
+                if (form.username.value.length > 40) {
+                    errors.push("Username too long (maximum 40 characters)");
+                }
+                if (form.password1.value.length > 1000) {
+                    errors.push("Password too long (maximum 1000 characters)");
+                }
+                if (form.username.value.length < 4) {
+                    errors.push("Username too short (minimum 4 characters)");
+                }
+                if (form.password1.value.length < 4) {
+                    errors.push("Password too short (minimum 4 characters)");
+                }
+                if (form.password1.value != form.password2.value) {
+                    errors.push("Passwords do not match");
+                }
+                if (errors.length > 0) {
+                    alert(errors.join("\n"));
+                    return false;
+                }
+                return true;
+            }
+        </script>
     </head>
     <body>
         <h2>Create new student account</h2>
+        {% if message %}
+            {% for error in message %}
+                <div style="color: red">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
         <div class="submit_container">
-            <form action="/create_student" method="post">
-                <p>Username: <input type="text" name="username" required minlength="4" maxlength="40"></p>
-                <p>Password: <input type="password" name="password1" required minlength="4" maxlength="1000"></p>
-                <p>Password again: <input type="password" name="password2" required minlength="4" maxlength="1000"></p>
+            <form action="/create_student" method="post" onsubmit="return check(this)">
+                <p>Username: <input type="text" name="username"></p>
+                <p>Password: <input type="password" name="password1"></p>
+                <p>Password again: <input type="password" name="password2"></p>
             <input type="submit" value="Create account">
             </form>
         </div> 

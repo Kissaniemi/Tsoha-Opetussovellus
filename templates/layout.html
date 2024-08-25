@@ -2,26 +2,43 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Education App {% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     </head>
     <body>
-        <div class="container">
-            <h1>Education App</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/">Main page</a></li>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/create_users">Create user profile</a></li>
-                {% if session.user_id %}
-                    <li><a href="/courses">Courses</a></li>
-                    <li><a href="/own_courses">Own courses</a></li>           
-                {% endif %}       
-            </ul>
-        </nav>
-        <hr>
-        {% block content %}{% endblock %}
+        <title>Education App {% block title %}{% endblock %}</title>
+        <h1>Education App</h1>
+        
+        <div class="container-fluid">
+            <div class="row flex-nowrap">
+                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info">
+                    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                        <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                            <span class="fs-5 d-none d-sm-inline">Main page</span>
+                        </a>
+                        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                            <li>
+                                <a href="/login" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                    <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline text-white">Login</span> </a>
+                                <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                                    <li class="w-100">
+                                        <a href="/create_users" class="nav-link px-0"> <span class="d-none d-sm-inline text-white">Create User</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% if session.user_id %}
+                                <li>
+                                    <a href="/courses" class="nav-link px-0"> <span class="d-none d-sm-inline text-white">Courses</span></a>
+                                </li>
+                                <li>
+                                    <a href="/own_courses" class="nav-link px-0"> <span class="d-none d-sm-inline text-white">Own courses</span></a>
+                                </li>       
+                            {% endif %} 
+                        </ul>
+                    </div>
+                </div>
+            <div class="col py-3">
+            {% block content %}{% endblock %}
+        </div>    
     </body>
 </html>
