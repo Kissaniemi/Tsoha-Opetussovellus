@@ -13,10 +13,10 @@
                 if (form.materialtext.value.length > 500) {
                     errors.push("Material text too long (maximum 500 characters)");
                 }
-                if (form.materialname.value.length < 5) {
+                if (form.materialname.value.trim().length < 5) {
                     errors.push("Material name too short (minimum 5 characters)");
                 }
-                if (form.materialtext.value.length < 5) {
+                if (form.materialtext.value.trim().length < 5) {
                     errors.push("Material text too short (minimum 5 characters)");
                 }
                 if (errors.length > 0) {
@@ -28,18 +28,26 @@
         </script>
     </head>
     <body>
-        <p><h3>Change material</h3></p>
-        <div class="submit_container">
-            <p><form action="/change_material/{{ info.id }}" method="post" onsubmit="return check(this)"></p>
-                <p>Material name (5-30 characters): <input type="text" value="{{ info.name }}" name="materialname"></p>
-                <p>Text material (5-500 characters):</p>
-                <p><textarea name="materialtext">{{ info.material }}</textarea></p>
-                <br>
-                <input type="hidden" name="course_id" value="{{ info.course_id }}">
-                <input type="submit" value="Update material">
-                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-            </form>
-        </div>
+        <p><form action="/course_page/{{ info.course_id  }}" method="post">
+            <input type="submit" value="Back to course page">
+        </form></p>
+        {% if message %}
+            <div style="color: red">{{ message }}</div>
+        {% endif %}
+        {% if not message %}
+            <p><h3>Change material</h3></p>
+            <div class="submit_container">
+                <p><form action="/change_material/{{ info.id }}" method="post" onsubmit="return check(this)"></p>
+                    <p>Material name (5-30 characters): <input type="text" value="{{ info.name }}" name="materialname"></p>
+                    <p>Text material (5-500 characters):</p>
+                    <p><textarea name="materialtext">{{ info.material }}</textarea></p>
+                    <br>
+                    <input type="hidden" name="course_id" value="{{ info.course_id }}">
+                    <input type="submit" value="Update material">
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                </form>
+            </div>
+        {% endif %}
         {% endblock %}
     </body>
 </html>    

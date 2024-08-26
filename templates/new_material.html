@@ -13,10 +13,10 @@
                 if (form.materialtext.value.length > 500) {
                     errors.push("Material text too long (maximum 500 characters)");
                 }
-                if (form.materialname.value.length < 5) {
+                if (form.materialname.value.trim().length < 5) {
                     errors.push("Material name too short (minimum 5 characters)");
                 }
-                if (form.materialtext.value.length < 5) {
+                if (form.materialtext.value.trim().length < 5) {
                     errors.push("Material text too short (minimum 5 characters)");
                 }
                 if (errors.length > 0) {
@@ -40,9 +40,9 @@
         <p><h3>Add new material to course</h3></p>
         <p><form action="/add_material/{{ course_id }}" method="post" onsubmit="return check(this)"></p>
             <div class="submit_container">
-                <p>Material name (5-30 characters): <input type="text" name="materialname"></p>
-                <p>Text material (5-500 characters):</p>
-                <p><textarea name="materialtext"></textarea></p>
+                <p>Material name: <input type="text" name="materialname" placeholder="5-30 characters"></p>
+                <p>Text material:</p>
+                <p><textarea name="materialtext" placeholder="5-500 characters"></textarea></p>
             </div>
             <p><input type="submit" value="Add material"></p>
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

@@ -13,10 +13,10 @@
                 if (form.password1.value.length > 1000) {
                     errors.push("Password too long (maximum 1000 characters)");
                 }
-                if (form.username.value.length < 4) {
+                if (form.username.value.trim().length < 4) {
                     errors.push("Username too short (minimum 4 characters)");
                 }
-                if (form.password1.value.length < 4) {
+                if (form.password1.value.trim().length < 4) {
                     errors.push("Password too short (minimum 4 characters)");
                 }
                 if (form.password1.value != form.password2.value) {
@@ -32,6 +32,9 @@
     </head>
     <body>
         <h2>Create new student account</h2>
+        {% if error %}
+            <div style="color: red">{{ error }}</div>
+        {% endif %}
         {% if message %}
             {% for error in message %}
                 <div style="color: red">{{ error }}</div>

@@ -63,8 +63,7 @@ def create_student():
         if users.register(username, password1, "student"):
             users.login(username, password1)
             return redirect("/")
-        error = "User creation failed"
-        return render_template("register_student.html", message=error)
+        return render_template("register_student.html", error="User creation failed")
 
 
 @app.route("/create_teacher", methods=["GET", "POST"])
@@ -92,9 +91,7 @@ def create_teacher():
         if users.register(username, password1, "teacher"):
             users.login(username, password1)
             return redirect("/")
-        error = "User creation failed"
-        return render_template("register_teacher.html", message=error)
-
+        return render_template("register_teacher.html", error="User creation failed")
 
 
 """Course related routes"""
@@ -142,27 +139,20 @@ def create_course():
         return render_template("new_course.html", message="Course creation failed")
 
 
-@app.route("/join_course", methods=["GET", "POST"])
+@app.route("/join_course", methods=["POST"])
 def join():
-    if request.method == "GET":
-            user_id = session.get("user_id", 0)
-            if user_id == 0:
-                return render_template("index.html", error="You need to log in first")
-            user_type = users.get_user_type(user_id)
-            if user_type[0] == True:
-                return render_template("courses.html", error="Only students can join courses")
-            return render_template("course_page.html")
-    
     if request.method == "POST":
         course_id = request.form["course_id"]
         user_id = session.get("user_id", 0)
+        info = courses.get_course_info(course_id)
+        teacher = users.get_user_type(user_id)
         if courses.check_course_teacher(user_id, course_id):
-             return render_template("courses.html", error="Only students can join courses")
+             return render_template("course_page.html", info=info, teacher=teacher[0], message="Can't join own course")
         if courses.join_course(course_id, user_id):
-            return redirect(url_for("course_page.html", course_id=course_id))
+            return render_template("course_page.html", info=info, teacher=teacher[0], success="Joined course")
         if not courses.join_course(course_id, user_id):
-            return render_template("courses.html", message="Already joined course")
-        return render_template("courses.html", message="Joining course failed")
+            return render_template("course_page.html", info=info, teacher=teacher[0], message="Already joined course")
+        return render_template("course_page.html", info=info, teacher=teacher[0], message="Joining course failed")
 
 
 @app.route("/delete_course", methods=["POST"])
@@ -218,13 +208,13 @@ def change_course(course_id):
             errors.append("Course description too short (minimum 5 characters)")
 
         if session["csrf_token"] != request.form["csrf_token"]:
-                return render_template("change_course.html", error="403")
+                return render_template("change_course.html", info=info, error="403")
         if errors:
-            return render_template("change_course.html", message=errors)
+            return render_template("change_course.html", info=info, message=errors)
         if courses.check_course_teacher(teacher_id, course_id):
             if courses.change_course(course_id, coursename, description):
                 return redirect("/courses")
-        return render_template("change_course.html", error="Course change failed")
+        return render_template("change_course.html", info=info, error="Course change failed")
 
 
 @app.route("/own_courses", methods=["GET"])
@@ -384,7 +374,7 @@ def change_material(material_id):
         if len(material) < 5:
             errors.append("Material text too short (minimum 5 characters)")
         if errors:
-            return render_template("change_material.html", error=errors)
+            return render_template("change_material.html", message=errors)
         if session["csrf_token"] != request.form["csrf_token"]:
                 return render_template("change_material.html", error="403")
         if materials.change_material(material_id, name, material):
@@ -401,11 +391,11 @@ def get_tasks(course_id):
     if user_id == 0:
         return render_template("index.html", error="You need to log in first")
     user_id = session.get("user_id", 0)
-    if not courses.check_course_teacher(user_id, course_id):
-        if not courses.check_course_student(user_id, course_id):
-            return render_template("courses.html", message="Only students of this course can see the course tasks")
     task_info = tasks.get_tasks(course_id)
     teacher = users.get_user_type(user_id)
+    if not courses.check_course_teacher(user_id, course_id):
+        if not courses.check_course_student(user_id, course_id):
+            return render_template("tasks.html", course_id=course_id, task_info=task_info, length=(len(task_info)), teacher=teacher[0], message="Only students of this course can see the course tasks")
     return render_template("tasks.html", course_id=course_id, task_info=task_info, length=(len(task_info)), teacher=teacher[0])
 
 
@@ -425,11 +415,16 @@ def add_multiple_choice(course_id):
         answers = request.form.getlist("answer")
         errors = []
         if len(question) > 100:
-            errors.append("Question too long")
+            errors.append("Question too long (maximum 100 characters)")
         if len(question) < 5:
             errors.append("Question too short (minimum 5 characters)")
-        if choices == "":
-            errors.append("Not enough choices")
+        for choice in choices:
+            if len(choice) > 100:
+                errors.append("Answer too long (maximum 100 characters)")
+            if len(choice) < 1:
+                errors.append("Answer too short (minimum 1 characters)")
+        if len(choices) == 10:
+            errors.append("Too many choices (maximum 10 choices)")
         if errors:
             return render_template("new_multiple_choice_task.html", message=errors)
         task_id = tasks.add_task(question, course_id, "multiple choice")
@@ -453,13 +448,13 @@ def add_fill_in(course_id):
         answer = request.form["answer"]
         errors = []
         if len(question) > 100:
-            errors.append("Question too long")
+            errors.append("Question too long (maximum 100 characters)")
         if len(answer) > 30:
-            errors.append("Answer too long")
+            errors.append("Answer too long (maximum 30 characters)")
         if len(question) < 5:
             errors.append("Question too short (minimum 5 characters)")
-        if len(answer) < 2:
-            errors.append("Answer too short (minimum 2 characters)")
+        if len(answer) < 1:
+            errors.append("Answer too short (minimum 1 characters)")
         if errors:
             return render_template("new_fill_in_task.html", message=errors)
         task_id = tasks.add_task(question, course_id, "fill in")
@@ -475,7 +470,8 @@ def do_task(course_id, task_id):
         if user_id == 0:
             return render_template("index.html", error="You need to log in first")
         if not courses.check_course_student(user_id, course_id):
-            return render_template("courses.html", message="Only students can try the course tasks")
+            return render_template("tasks.html", course_id= course_id , message="Only students can try the course tasks")
+        
         task_info = tasks.get_task_info(task_id)
         task_choices = tasks.get_task_choices(task_id)
         if task_info[3] == "multiple choice":

@@ -71,4 +71,3 @@ def get_user_name(user_id):
     if result_one is None:
         return False
     return result_one[0]
-

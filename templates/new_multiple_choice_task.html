@@ -10,14 +10,62 @@
                 if (form.question.value.length > 100) {
                     errors.push("Question too long (maximum 100 characters)");
                 }
-                if (form.question.value.length < 5) {
+                if (form.question.value.trim().length < 5) {
                     errors.push("Question too short (minimum 5 characters)");
+                }
+
+                var choices = form.querySelectorAll("input[name='choice']");
+                for (let i=0; i< choices.length; i++) {
+                    if (choices[i].value.length > 100) {
+                        errors.push("Answer too long (maximum 100 characters)");
+                    }
+                    if (choices[i].value.trim().length  < 1) {
+                        errors.push("Answer " + (i+1) + " too short (minimum 1 characters)");
+                    }
                 }
                 if (errors.length > 0) {
                     alert(errors.join("\n"));
                     return false;
                 }
                 return true;
+            }
+        </script>
+        <script>
+            function add_answer() {
+                var container = document.getElementById("answer-container");
+
+                var Choices = container.getElementsByClassName("choice-container").length;
+
+                if (Choices >= 8) {
+                    alert("You can only add max 10 choices")
+                    return;
+                }
+
+                const newDiv = document.createElement("div");
+                newDiv.className = "choice-container";
+                newDiv.style.marginTop = "10px";
+                newDiv.style.marginBottom= "10px";
+
+                const newChoice = document.createElement("label");
+                newChoice.textContent = "Choice:";
+                newChoice.style.marginRight= "4px";
+                newDiv.appendChild(newChoice);
+
+                const newElem = document.createElement("input");
+                newElem.setAttribute("type", "text");
+                newElem.setAttribute("name", "choice");
+                newElem.setAttribute("placeholder", "1-100 characters");
+                newElem.style.marginRight= "4px";
+
+                const newCheck = document.createElement("input");
+                newCheck.setAttribute("type", "radio");
+                newCheck.setAttribute("name", "answer");
+                newCheck.setAttribute("value", "0");
+                
+                newDiv.appendChild(newElem);
+                newDiv.appendChild(newCheck);
+                newDiv.appendChild(document.createElement("br"));
+                container.appendChild(newDiv)
             }
         </script>
     </head>
@@ -35,22 +83,19 @@
         </div>
         <p></p>
         <div class="longer_submit_container">
-            <p>Question (5-100 characters):</p>
-            <p><input type="text" name="question"></p>
-            <p>Choice 1:</p>
-                <p><input type="text" name="choice">
+            <p>Question:
+            <input type="text" name="question" placeholder="5-100 characters"></p>
+            <p>Choice: 
+                <input type="text" name="choice" placeholder="1-100 characters">
                 <input type="radio" name="answer" value="0" checked></p>
-            <p>Choice 2:</p>
-                <p><input type="text" name="choice">
+            <p>Choice: 
+                <input type="text" name="choice" placeholder="1-100 characters">
                 <input type="radio" name="answer" value="1"></p>
-            <p>Choice 3:</p>
-                <p><input type="text" name="choice">
-                <input type="radio" name="answer" value="2"></p>
-            <p>Choice 4:</p>
-                <p><input type="text" name="choice">
-                <input type="radio" name="answer" value="3"></p>
+            <div id="answer-container"></div>
+                <button type="button" onclick="add_answer()">Add another answer choice </button>
+            </div>
+            <p></p>
             <p><input type="submit" value="Add task"></p>
-        </div>
         </form>
         <p></p>
         {% endblock %}

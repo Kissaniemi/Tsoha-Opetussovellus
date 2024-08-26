@@ -11,22 +11,29 @@
             <input type="submit" value="Back to course page">
         </form></p>
         <hr>
-        <h2>Available tasks:</h2>
-        <hr>
-        {% for i in range (0, length) %}
-        <div class="smaller_submit_container">
-            <p><b>Question:</b> {{ task_info[i][1] }}</p>
-            <p><form action="/task_page/{{ course_id }}/{{ task_info[i][0] }}" method="get">
-            <input type="submit" value="Try task">
+        {% if message %}
+            <div style="color: red">{{ message }}</div>
             </form></p>
-        {% if teacher %}  
-            <p><form action="/delete_task/{{ task_info[i][0] }}" method="post" onclick="return confirm('Are you sure you want to delete this task?')">
-            <input type="submit" value="Delete task">
-            </form><p>
-        {% endif %}  
-        </div>  
-        <p></p>
-        {% endfor %}
+        {% endif %}
+        {% if not message %}
+            <h2>Available tasks:</h2>
+            <hr>
+            {% for i in range (0, length) %}
+            <div class="smaller_submit_container">
+                <p><b>Question:</b> {{ task_info[i][1] }}</p>
+                {% if not teacher %}
+                    <p><form action="/task_page/{{ course_id }}/{{ task_info[i][0] }}" method="get">
+                    <input type="submit" value="Try task">
+                    </form></p>
+                {% else %} 
+                <p><form action="/delete_task/{{ task_info[i][0] }}" method="post" onclick="return confirm('Are you sure you want to delete this task?')">
+                <input type="submit" value="Delete task">
+                </form><p>
+            {% endif %}  
+            </div>  
+            <p></p>
+            {% endfor %}
+        {% endif %}
         {% endblock %}
     </body>
 </html>

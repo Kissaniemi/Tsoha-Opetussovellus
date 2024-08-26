@@ -11,13 +11,13 @@
                     errors.push("Question too long (maximum 100 characters)");
                 }
                 if (form.answer.value.length > 30) {
-                    errors.push("Answer too long (maximum 300 characters)");
+                    errors.push("Answer too long (maximum 30 characters)");
                 }
-                if (form.question.value.length < 5) {
+                if (form.question.value.trim().length < 5) {
                     errors.push("Question too short (minimum 5 characters)");
                 }
-                if (form.answer.value.length < 2) {
-                    errors.push("Answer too short (minimum 2 characters)");
+                if (form.answer.value.trim().length < 1) {
+                    errors.push("Answer too short (minimum 1 characters)");
                 }
                 if (errors.length > 0) {
                     alert(errors.join("\n"));
@@ -46,10 +46,10 @@
             </div>
             <p></p>
              <div class="submit_container">
-                <p>Question (5-100 characters):</p>
-                <p><input type="text" name="question"></p>
+                <p>Question:</p>
+                <p><input type="text" name="question" placeholder="5-100 characters"></p>
                 <p>Answer (5-30 characters):</p>
-                <p><input type="text" name="answer"></p>
+                <p><input type="text" name="answer" placeholder="1-30 characters"></p>
                 <p><input type="submit" value="Add task"></p>
             </div>
             </form>

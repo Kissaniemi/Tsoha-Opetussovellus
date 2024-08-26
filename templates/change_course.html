@@ -13,10 +13,10 @@
                 if (form.description.value.length > 1000) {
                     errors.push("Course description too long (maximum 1000 characters)");
                 }
-                if (form.coursename.value.length < 5) {
+                if (form.coursename.value.trim().length < 5) {
                     errors.push("Course name too short (minimum 5 characters)");
                 }
-                if (form.description.value.length < 5) {
+                if (form.description.value.trim().length < 5) {
                     errors.push("Course description too short (minimum 5 characters)");
                 }
                 if (errors.length > 0) {
@@ -47,6 +47,7 @@
         <p><input type="submit" value="Change course"></p>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
+        {% endif %}
     {% endblock %}
     </body>
 </html>
