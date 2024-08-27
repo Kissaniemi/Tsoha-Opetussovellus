@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}New material{% endblock %}
         {% block content %}
@@ -39,13 +42,13 @@
         {% endif %}
         <p><h3>Add new material to course</h3></p>
         <p><form action="/add_material/{{ course_id }}" method="post" onsubmit="return check(this)"></p>
-            <div class="submit_container">
+            <div class="container">
                 <p>Material name: <input type="text" name="materialname" placeholder="5-30 characters"></p>
                 <p>Text material:</p>
                 <p><textarea name="materialtext" placeholder="5-500 characters"></textarea></p>
+                <p><input type="submit" value="Add material"></p>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </div>
-            <p><input type="submit" value="Add material"></p>
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </form>  
         {% endblock %}
     </body>

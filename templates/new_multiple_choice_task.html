@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}New multiple chocie task{% endblock %}
         {% block content %}
@@ -76,13 +79,13 @@
         <hr>
         <p><form action="/add_multiple_choice/{{ course_id }}" method="post" onsubmit="return check(this)"></p>
         <p><h3>Multiple choice task</h3></p>
-        <div class="smaller_submit_container">
+        <div class="container">
             <p>Write the task question in the question field. </p>
             <p>Write the choices in the fields under that (blank fields will be ignored).</p>
             <p>Mark correct answer with the checkbox next to the choice (You can only choose one).</p>
         </div>
         <p></p>
-        <div class="longer_submit_container">
+        <div class="container">
             <p>Question:
             <input type="text" name="question" placeholder="5-100 characters"></p>
             <p>Choice: 
@@ -93,9 +96,10 @@
                 <input type="radio" name="answer" value="1"></p>
             <div id="answer-container"></div>
                 <button type="button" onclick="add_answer()">Add another answer choice </button>
+                <p></p>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                <p><input type="submit" value="Add task"></p>
             </div>
-            <p></p>
-            <p><input type="submit" value="Add task"></p>
         </form>
         <p></p>
         {% endblock %}

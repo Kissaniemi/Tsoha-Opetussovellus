@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Tasks{% endblock %}
         {% block content %}
@@ -10,11 +13,12 @@
             <div style="color: red">{{ error }}</div>
         {% endif %}
         {% if not error %}
-            <h2>Own courses:</h2>
+            <h2>Own courses</h2>
             <hr>
+            <p><b>Number of own courses: {{count}}</b></p>
             {% if course_info %}
                 {% for info in course_info %}
-                    <div class="submit_container">
+                    <div class="container">
                         <p><b>Course name:</b> {{ info[1] }}</p>
                         <p><b>Course description:</b> {{ info[3] }}</p>
                         <p><form action="/course_page/{{ info[0]}}" method="get">

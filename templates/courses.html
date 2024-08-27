@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Courses{% endblock %}
         {% block content %}
@@ -13,18 +16,14 @@
             </form></p>
         {% endif %}
         {% if not error %}
-            <p><form action="/course_page/{{ course_id }}" method="post">
-                <input type="submit" value="Back to course page">
-            </form></p>
-            <hr>
             {% if message %}
                  <div style="color: red">{{ message }}</div>
             {% endif %}
         <h2>Courses</h2>
-        <p><b>Number of available courses: {{count}}</b></p>
         <hr>
+        <p><b>Number of available courses: {{count}}</b></p>
         {% for course in courses %}
-        <div class="smaller_submit_container">
+        <div class="container">
             <p><b>Course:</b> {{ course[1] }}</p>
             <p><b>Course description:</b> {{ course[2] }}</p>
             <p><form action="/course_page/{{ course[0] }}" method="post">

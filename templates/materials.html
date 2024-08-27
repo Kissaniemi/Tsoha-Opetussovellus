@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Materials{% endblock %}
         {% block content %}
@@ -23,9 +26,9 @@
             <h2>Available material:</h2>
             <hr>
             {% for mat in material %}
-            <div class="smaller_submit_container">
-                <p><b>Material name:</b> {{ mat[1] }}
-                <a href="/material_page/{{ mat[3] }}/{{ mat[0] }}"> Read material </a></p>
+            <div class="container">
+                <p><b>Material name:</b> {{ mat[1] }}</p>
+                <p><a href="/material_page/{{ mat[3] }}/{{ mat[0] }}"> Read material </a></p>
             {% if teacher %}
                 <p><form action="/delete_material/{{ mat[0] }}" method="post" onclick="return confirm('Are you sure you want to delete this material?')">
                     <input type="submit" value="Delete material">

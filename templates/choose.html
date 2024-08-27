@@ -1,13 +1,17 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Choose user type{% endblock %}
         {% block content %}
     </head>
     <body>
         <h2>Create user account</h2>
-        <div class="smaller_submit_container">
+        <hr>
+        <div class="container">
             <p>Do you want to create a new <b>student</b> account or <b>teacher</b> account?</p>
             <p><a href="/create_student">Create student account</a></p>
             <p><a href="/create_teacher">Create teacher account</a></p>

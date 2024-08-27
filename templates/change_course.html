@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Change course{% endblock %}
         {% block content %}
@@ -37,15 +40,15 @@
         {% endif %}
         {% if not message %}
         <p><h3>Change course info</h3></p>
-        <div class="submit_container"> 
+        <div class="container"> 
             <form action="/change_course/{{ info.id }}" method="post" onsubmit="return check(this)">
             <input type="hidden" name="course_id" value="{{ info[0] }}">
             <p>Course name: <input type="text" name="coursename" value="{{ info.name }}"></p>
             <p>Course description:</p>
             <p><textarea type = "text" name="description"> {{ info.description }}</textarea> </p>
+            <p><input type="submit" value="Change course"></p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </div>
-        <p><input type="submit" value="Change course"></p>
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
         {% endif %}
     {% endblock %}

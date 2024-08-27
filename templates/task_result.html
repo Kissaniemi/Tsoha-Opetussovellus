@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Result page{% endblock %}
         {% block content %}
@@ -10,11 +13,16 @@
             <input type="submit" value="Back to tasks">
         </form></p>
         <hr>
-        <div class="smaller_submit_container">
+        <div class="container">
             <p>Result for the quiz: {{ message }}</p>
             <p><form action="/task_page/{{ course_id }}/{{ task_id }}" method="get">
                 <input type="submit" value="Try again">
             </form></p>
+            {% if previous_task %}
+                <p><form action="/task_page/{{ course_id }}/{{ previous_task }}" method="get">
+                    <input type="submit" value="Previous Task">
+                </form></p>
+            {% endif %} 
             {% if next_task %}
                 <p><form action="/task_page/{{ course_id }}/{{ next_task }}" method="get">
                     <input type="submit" value="Next Task">

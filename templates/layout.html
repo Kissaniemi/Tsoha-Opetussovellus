@@ -3,24 +3,27 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">   
+        <link rel="stylesheet" href="/static/main.css"> 
+        <title>Education App {% block title %}{% endblock %}</title>
     </head>
     <body>
-        <title>Education App {% block title %}{% endblock %}</title>
-        <h1>Education App</h1>
-        
+        <div class="container-fluid bg-info text-white">
+            <h1>Education App</h1>
+        </div>
         <div class="container-fluid">
             <div class="row flex-nowrap">
                 <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-info">
                     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                            <span class="fs-5 d-none d-sm-inline">Main page</span>
+                            <span class="fs-5 d-none d-sm-inline text-white">Main page</span>
                         </a>
                         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                             <li>
-                                <a href="/login" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                    <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline text-white">Login</span> </a>
-                                <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                                <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu"> 
+                                    <li class="w-100">
+                                        <a href="/login" class="nav-link px-0"> <span class="d-none d-sm-inline text-white">Login User</span></a>
+                                    </li>
                                     <li class="w-100">
                                         <a href="/create_users" class="nav-link px-0"> <span class="d-none d-sm-inline text-white">Create User</span></a>
                                     </li>

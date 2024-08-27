@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Register teacher {% endblock %}
         {% block content %}
@@ -32,6 +35,7 @@
     </head>
     <body>
         <h2>Create new teacher account</h2>
+        <hr>
         {% if error %}
             <div style="color: red">{{ error }}</div>
         {% endif %}
@@ -40,11 +44,12 @@
                 <div style="color: red">{{ error }}</div>
             {% endfor %}
         {% endif %}
-        <div class="submit_container">
+        <div class="container">
             <form action="/create_teacher" method="post" onsubmit="return check(this)">
                 <p>Username: <input type="text" name="username"></p>
                 <p>Password: <input type="password" name="password1"></p>
                 <p>Password again: <input type="password" name="password2"></p>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                 <p><input type="submit" value="Create account"></p>
             </form>
         </div> 

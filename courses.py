@@ -22,7 +22,8 @@ def create_new(name, description, user_id):
         if user:
             return False
         sql = text(
-            "INSERT INTO courses(name, teacher_id, description) VALUES(:name,:teacher_id,:description)")
+            "INSERT INTO courses(name, teacher_id, description) \
+                VALUES(:name,:teacher_id,:description)")
         db.session.execute(sql,
                             {"name": name,
                             "teacher_id": user_id,
@@ -39,13 +40,12 @@ def join_course(course_id, user_id):
     """
     try:
         sql = text("SELECT id FROM students WHERE user_id=:user_id AND course_id=:course_id ")
-        result = db.session.execute(sql, 
-                                    {"user_id": user_id, 
+        result = db.session.execute(sql,
+                                    {"user_id": user_id,
                                     "course_id": course_id})
         user = result.fetchone()
         if user:
             return False
-         
         sql = text("INSERT INTO students(user_id, course_id) VALUES(:user_id, :course_id)")
         db.session.execute(sql,
                            {"user_id": user_id,
@@ -60,7 +60,7 @@ def check_course_teacher(teacher_id, course_id):
     """Checks that the given user_id matches the course teacher_id
     """
     sql = text("SELECT teacher_id FROM courses WHERE id=:id AND teacher_id=:teacher_id")
-    result = db.session.execute(sql, 
+    result = db.session.execute(sql,
                                 {"id": course_id,
                                 "teacher_id": teacher_id})
     if result.fetchone() is None:
@@ -89,17 +89,17 @@ def delete_course(course_id):
             tasks.delete_task(task[0])
 
         sql = text("DELETE FROM materials WHERE course_id=:course_id")
-        db.session.execute(sql, 
+        db.session.execute(sql,
                             {"course_id": course_id})
         db.session.commit()
 
         sql = text("DELETE FROM students WHERE course_id=:course_id")
-        db.session.execute(sql, 
+        db.session.execute(sql,
                             {"course_id": course_id})
         db.session.commit()
 
         sql = text("DELETE FROM courses WHERE id=:id")
-        db.session.execute(sql, 
+        db.session.execute(sql,
                             {"id": course_id})
         db.session.commit()
 
@@ -112,7 +112,7 @@ def get_course_info(course_id):
     """Returns course id, name, teacher_id and description
     """
     sql = text("SELECT id, name, teacher_id, description FROM courses WHERE id=:id ")
-    result = db.session.execute(sql, 
+    result = db.session.execute(sql,
                                 {"id": course_id})
     return result.fetchone()
 
@@ -135,7 +135,7 @@ def get_own_courses(user_id):
     """Returns list of courses that the given user_id has joined
     """
     sql = text("SELECT course_id FROM students WHERE user_id=:user_id ")
-    result = db.session.execute(sql, 
+    result = db.session.execute(sql,
                                 {"user_id": user_id})
     return result.fetchall()
 

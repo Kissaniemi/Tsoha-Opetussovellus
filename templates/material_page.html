@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Course page{% endblock %}
         {% block content %}
@@ -10,12 +13,20 @@
             <input type="submit" value="Back to materials">
         </form></p>
         <hr>
-        <p>Material: {{ material[2] }} </p>
+        <b>Material:</b>
+        <div class="container">
+            <p style="white-space: pre-line">{{ material[2] }}</p>
+        </div>
+        <hr>
+        {% if previous_material %}
+            <p><form action="/material_page/{{ course_id }}/{{ previous_material }}" method="get">
+                <input type="submit" value="Previous material">
+            </form></p>
+        {% endif %}
         {% if next_material %}
-            <hr>
-            <p><form action="/material_page/{{ course_id }}/{{ next_material }}" method="get">
+            <form action="/material_page/{{ course_id }}/{{ next_material }}" method="get">
                 <input type="submit" value="Next material">
-            </form><p>
+            </form>
         {% endif %}
         {% endblock %}
     </body>

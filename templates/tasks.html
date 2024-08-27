@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Tasks{% endblock %}
         {% block content %}
@@ -19,7 +22,7 @@
             <h2>Available tasks:</h2>
             <hr>
             {% for i in range (0, length) %}
-            <div class="smaller_submit_container">
+            <div class="container">
                 <p><b>Question:</b> {{ task_info[i][1] }}</p>
                 {% if not teacher %}
                     <p><form action="/task_page/{{ course_id }}/{{ task_info[i][0] }}" method="get">

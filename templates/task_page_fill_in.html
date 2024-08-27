@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Fill-in task{% endblock %}
         {% block content %}
@@ -10,14 +13,25 @@
             <input type="submit" value="Back to tasks">
         </form></p>
         <hr>
-        <div class="submit_container"> 
+        <div class="container"> 
         <p><b>Question:</b>{{ task_info[1] }} </p>
         <p><form action="/task_page/{{ course_id }}/{{ task_info[0] }}" method="post"></p>
             <b>Write the answer to the question below without capital letters or special characters</b>
             <p><input type="text" name="answer"></p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </div>
             <p><input type="submit" value="Submit answer"></p>
         </form></p>
+        {% if previous_task %}
+            <p><form action="/task_page/{{ course_id }}/{{ previous_task }}" method="get">
+                <input type="submit" value="Previous task">
+            </form></p>
+        {% endif %} 
+        {% if next_task %}
+            <p><form action="/task_page/{{ course_id }}/{{ next_task }}" method="get">
+                <input type="submit" value="Next task">
+            </form></p>
+        {% endif %} 
         {% endblock %}
     </body>
 </html>

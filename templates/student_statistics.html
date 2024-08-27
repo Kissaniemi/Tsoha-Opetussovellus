@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">  
         {% extends "layout.html" %}
         {% block title %}Student statistics{% endblock %}
         {% block content %}
@@ -14,22 +17,26 @@
                 <input type="submit" value="Back to course page">
             </form></p>
             <hr>
-            <h2>Course Statistics</h2>   
-            <div class="submit_container">
-                <h3>Course name:</h3> <b>{{ course_info[1] }}</b>
-                <p><h3>Course teacher:</h3><b>{{ teacher }}</b></p>
+            <p><h2>Course Statistics</h2></p> 
+            <h3>Course name:</h3> 
+            <div class="container">
+                <b>{{ course_info[1] }}</b>
+            </div>    
+            <p></p> 
+            <h3>Course teacher:</h3>
+                <div class="container">
+                <b>{{ teacher }}</b>
             </div>
             <hr>
             <p><h3>Course task status:</h3></p>
-            <p>(False if failed, True if passed, Not done yet otherwise)</p>
-            <br>
+               
             {% for i in range(0, length) %}
-            <div class="smaller_submit_container">
-                <p><b>Task:</b> {{ course_tasks[i][1] }}</p>
-                <p><b>Task done status:</b> {{ answers[i][1] }}</p>
-            </div>
-            <p></p>
-            {% endfor %}
+                <div class="container"> 
+                    <p><b>Task:</b> {{ course_tasks[i][1] }}</p>
+                    <p><b>Task status:</b> {{ answers[i][1] }}</p>
+                </div>
+            <p></p>    
+            {% endfor %}  
         {% endif %}
         {% endblock %}
     </body>
