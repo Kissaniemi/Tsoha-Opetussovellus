@@ -19,18 +19,20 @@
             {% for i in range(0, length) %}
                 <p>{{ task_choices[i][0] }} <input type="radio" name="answer" value="{{ i }}"></p>
             {% endfor %}
+            <p><input type="submit" value="Submit answer"></form></p>
         </div>
-        <p><input type="submit" value="Submit answer"></form></p>
-        {% if previous_task %}
-            <p><form action="/task_page/{{ course_id }}/{{ previous_task }}" method="get">
-                <input type="submit" value="Previous task">
-            </form></p>
-        {% endif %} 
-        {% if next_task %}
-            <p><form action="/task_page/{{ course_id }}/{{ next_task }}" method="get">
-                <input type="submit" value="Next task">
-            </form></p>
-        {% endif %} 
+        <div class="button-container">   
+            {% if previous_task %}
+                <p><form action="/task_page/{{ course_id }}/{{ previous_task }}" method="get">
+                    <input type="submit" value="Previous task">
+                </form></p>
+            {% endif %} 
+            {% if next_task %}
+                <p><form action="/task_page/{{ course_id }}/{{ next_task }}" method="get">
+                    <input type="submit" value="Next task">
+                </form></p>
+            {% endif %} 
+        </div>
         {% endblock %}
     </body>
 </html>

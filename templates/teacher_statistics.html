@@ -7,11 +7,23 @@
         {% extends "layout.html" %}
         {% block title %}Teacher statistics{% endblock %}
         {% block content %}
+        <script>
+            function HideDiv(given_div) {
+              var x = document.getElementById(given_div);
+              if (x.style.display === "none") {
+                x.style.display = "block";
+              } else {
+                x.style.display = "none";
+              }
+            }
+            </script>
     </head>
     <body>
         <p><form action="/course_page/{{ course_info[0] }}" method="post">
             <input type="submit" value="Back to course page">
         </form></p>
+        <hr>
+        <p><h2>Course Statistics</h2></p> 
         <hr>
         <p><h3>Course name:</h3>
         <div class="container">
@@ -19,58 +31,65 @@
         </div>
         <hr>
         <h3>List of students:</h3>
-        <p><b>Number of students in course: {{ student_amount }} </b></p>
+        <p><button type="button" onclick="HideDiv('myDIV1')">Show/hide</button></p>
+        <div id="myDIV1">
+            <p><b>Number of students in the course: {{ student_amount }} </b></p>
+            {% for i in range(student_amount) %}
+                <div class="container"> 
+                    <p>{{student_info[i]}}</p>
+                    <p><b>Tasks passed:</b> {{passed[i]}}/{{task_amount}}</p>
+                </div>  
+                <p></p>
+            {% endfor %}
 
-        {% for student in student_info %}
-            <div class="container"> 
-                {{student}}
-            </div>  
-            <p></p>
-        {% endfor %}
-
-        {% if not student_info %}
-            <div class="container"> 
-                <b>No students yet</b>
-            </div>  
-            <p></p>
-        {% endif%}
-
+            {% if not student_info %}
+                <div class="container"> 
+                    <b>No students yet</b>
+                </div>  
+                <p></p>
+            {% endif%}
+        </div>
         <hr>
+
         <p><h3>Course task questions:</h3></p>
-        <p><b>Number of tasks: {{ task_amount }} </b></p>
+        <p><button type="button" onclick="HideDiv('myDIV2')">Show/hide</button></p>
+        <div id="myDIV2">
+            <p><b>Number of tasks: {{ task_amount }} </b></p>
+            {% for task in tasks %}  
+                <div class="container">
+                    <b>Task: </b>{{ task[1] }}
+                </div>
+                <p></p>
+            {% endfor %}
 
-        {% for task in tasks %}  
-            <div class="container">
-                <b>Task: </b>{{ task[1] }}
-            </div>
-            <p></p>
-        {% endfor %}
-
-        {% if not tasks %}
-            <div class="container"> 
-                <b>No tasks yet</b>
-            </div>  
-            <p></p>
-        {% endif%}
+            {% if not tasks %}
+                <div class="container"> 
+                    <b>No tasks yet</b>
+                </div>  
+                <p></p>
+            {% endif%}
+        </div>
 
         <hr>
-        <p><h3>Student task status:</h3></p>
-        
-        {% for student in student_results %}  
-            <div class="container">
-                <p><b>Task:</b> {{ student[1][1] }}</p>
-                <p><b>Student:</b> {{ student[0] }}</p>
-                <p><b>Task status:</b> {{ student[2][1] }}</p>
-            </div>
-            <p></p>
-        {% endfor %}
+        <p><h3>More detailed student task status:</h3></p>
+        <p><button type="button" onclick="HideDiv('myDIV3')">Show/hide</button></p>
+        <div id="myDIV3">
+            {% for student in student_results %}  
+                <div class="container">
+                    <p><b>Task:</b> {{ student[1][1] }}</p>
+                    <p><b>Student:</b> {{ student[0] }}</p>
+                    <p><b>Task status:</b> {{ student[2][1] }}</p>
+                </div>
+                <p></p>
+            {% endfor %}
 
-        {% if not student_results %}
-            <div class="container"> 
-                <b>No results yet</b>
-            </div>  
-            <p></p>
-        {% endif%}
+            {% if not student_results %}
+                <div class="container"> 
+                    <b>No results yet</b>
+                </div>  
+                <p></p>
+            {% endif%}
+        </div>
 
         {% endblock %}
     </body>

@@ -33,23 +33,17 @@ def logout():
     return redirect("/")
 
 
-@app.route("/create_users", methods=["GET"])
-def create_users():
+@app.route("/create_user", methods=["GET", "POST"])
+def create_user():
     if request.method == "GET":
         return render_template(
-            "choose.html")
-
-
-@app.route("/create_student", methods=["GET", "POST"])
-def create_student():
-    if request.method == "GET":
-        return render_template(
-            "register_student.html")
+            "register.html")
 
     if request.method == "POST":
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+        user_type = request.form.getlist("user_type")
         errors = []
         if len(username) > 40:
             errors.append("Username too long (maximum 40 characters)")
@@ -65,45 +59,18 @@ def create_student():
             errors.append("403")
         if errors:
             return render_template(
-                "register_student.html", message=errors)
-        if users.register(username, password1, "student"):
-            users.login(username, password1)
-            return redirect("/")
+                "register", message=errors)
+        
+        if user_type[0] == "0":
+            if users.register(username, password1, "student"):
+                users.login(username, password1)
+                return redirect("/")
+        if user_type[0] == "1":
+            if users.register(username, password1, "teacher"):
+                users.login(username, password1)
+                return redirect("/") 
         return render_template(
-            "register_student.html", error="User creation failed")
-
-
-@app.route("/create_teacher", methods=["GET", "POST"])
-def create_teacher():
-    if request.method == "GET":
-        return render_template(
-            "register_teacher.html")
-
-    if request.method == "POST":
-        username = request.form["username"]
-        password1 = request.form["password1"]
-        password2 = request.form["password2"]
-        errors = []
-        if len(username) > 40:
-            errors.append("Username too long (maximum 40 characters)")
-        if len(password1) > 1000:
-            errors.append("Password too long (maximum 1000 characters)")
-        if len(username) < 4:
-            errors.append("Username too short (minimum 4 characters)")
-        if len(password1) < 4:
-            errors.append("Password too short (minimum 4 characters)")
-        if password1 != password2:
-            errors.append("Passwords do not match")
-        if session["csrf_token"] != request.form["csrf_token"]:
-            errors.append("403")
-        if errors:
-            return render_template(
-                "register_teacher.html", message=errors)
-        if users.register(username, password1, "teacher"):
-            users.login(username, password1)
-            return redirect("/")
-        return render_template(
-            "register_teacher.html", error="User creation failed")
+            "register.html", error="User creation failed")
 
 
 """Course related routes"""
@@ -305,16 +272,23 @@ def course_statistics(course_id):
         course_tasks = tasks.get_tasks(course_id)
         students = []
         student_results = []
+        passed = []
+        task_passed = 0
         for student in student_info:
             students.append(users.get_user_name(student[0]))
             for task in course_tasks:
                 student_results.append((users.get_user_name(student[0]), \
                                         task, tasks.get_answers(student[0], task[0])))
+                if tasks.get_answers(student[0], task[0])[1] == "Passed":
+                    task_passed += 1
+            passed.append(task_passed)
+            task_passed = 0
+
         return render_template(
             "teacher_statistics.html", course_info=course_info,
             tasks=course_tasks, student_info=students,
             student_results=student_results, student_amount=len(student_info),
-            task_amount=len(course_tasks))
+            task_amount=len(course_tasks), passed=passed)
 
 
 """ Material related routes """

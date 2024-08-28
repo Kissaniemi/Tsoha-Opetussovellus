@@ -14,24 +14,26 @@
         </form></p>
         <hr>
         <div class="container"> 
-        <p><b>Question:</b>{{ task_info[1] }} </p>
-        <p><form action="/task_page/{{ course_id }}/{{ task_info[0] }}" method="post"></p>
-            <b>Write the answer to the question below without capital letters or special characters</b>
-            <p><input type="text" name="answer"></p>
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            <p><b>Question:</b>{{ task_info[1] }} </p>
+            <p><form action="/task_page/{{ course_id }}/{{ task_info[0] }}" method="post"></p>
+                <b>Write the answer to the question below without capital letters or special characters</b>
+                <p><input type="text" name="answer"></p>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                <p><input type="submit" value="Submit answer"></p>
+            </form></p>
         </div>
-            <p><input type="submit" value="Submit answer"></p>
-        </form></p>
-        {% if previous_task %}
-            <p><form action="/task_page/{{ course_id }}/{{ previous_task }}" method="get">
-                <input type="submit" value="Previous task">
-            </form></p>
-        {% endif %} 
-        {% if next_task %}
-            <p><form action="/task_page/{{ course_id }}/{{ next_task }}" method="get">
-                <input type="submit" value="Next task">
-            </form></p>
-        {% endif %} 
+        <div class="button-container">          
+            {% if previous_task %}
+                <p><form action="/task_page/{{ course_id }}/{{ previous_task }}" method="get">
+                    <input type="submit" value="Previous task">
+                </form></p>
+            {% endif %} 
+            {% if next_task %}
+                <p><form action="/task_page/{{ course_id }}/{{ next_task }}" method="get">
+                    <input type="submit" value="Next task">
+                </form></p>
+            {% endif %} 
+        </div>
         {% endblock %}
     </body>
 </html>

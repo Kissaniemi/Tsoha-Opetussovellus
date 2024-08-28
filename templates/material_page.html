@@ -17,7 +17,7 @@
         <div class="container">
             <p style="white-space: pre-line">{{ material[2] }}</p>
         </div>
-        <hr>
+        <div class="button-container">
         {% if previous_material %}
             <p><form action="/material_page/{{ course_id }}/{{ previous_material }}" method="get">
                 <input type="submit" value="Previous material">
@@ -28,6 +28,7 @@
                 <input type="submit" value="Next material">
             </form>
         {% endif %}
+        </div>
         {% endblock %}
     </body>
 </html>
